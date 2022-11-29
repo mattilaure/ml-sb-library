@@ -107,7 +107,7 @@ function Game(props) {
     }
     if(checkActiveUser()){
       turnCounter ++;
-      if(state.activePlayer === state.handsInGame.length - 1){
+      if(state.activePlayer === state.handsInGame.length){
         state.activePlayer = 0
       }
       handleClick(state.handsInGame[state.activePlayer])
