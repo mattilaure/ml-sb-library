@@ -1,8 +1,7 @@
 //React
 import React, { useEffect, useState } from "react";
 
-//Navigation
-import { useNavigate } from "react-router-dom";
+
 
 //React Native
 import { View, Text, ImageBackground, Platform } from "react-native";
@@ -11,6 +10,7 @@ import { View, Text, ImageBackground, Platform } from "react-native";
 import Button from "../button/Button";
 import TextField from "../textField/TextField";
 import ModalCustom from "../modal/ModalCustom";
+import Game from "../game/Game"
 
 //Style
 import { styles } from "./homeStyle.js";
@@ -22,32 +22,17 @@ function Home() {
   const [state, setState] = useState({
     modalVisible: false,
   });
-  const navigate = useNavigate();
+
 
   useEffect(() => {}, []);
 
-  function goToLogin() {
-    navigate("/login");
-  }
-
-  function goToSignup() {
-    navigate("/registration");
-  }
-
-  function goToLobby() {
-    navigate("/lobby");
-  }
-
-  function goToLeaderboard() {
-    navigate("/leaderboard");
-  }
 
   function editUser() {
     setState({ ...state, modalVisible: !state.modalVisible });
   }
   return (
     <View style={styles.container}>
-      <ImageBackground
+      {/* <ImageBackground
         source={background}
         resizeMode="cover"
         style={styles.image}
@@ -75,7 +60,8 @@ function Home() {
             />
           </View>
         </View>
-      </ImageBackground>
+      </ImageBackground> */}
+      <Game />
     </View>
   );
 }
