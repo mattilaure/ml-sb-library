@@ -101,7 +101,7 @@ function Game(props) {
 
   //GAME
   function game() {
-
+  
     if(turnCounter===1){
       drawFirst()
     }
