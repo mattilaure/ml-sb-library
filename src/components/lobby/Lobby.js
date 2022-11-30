@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+
+//react-native
+import { View, Text } from "react-native";
 
 function Lobby() {
   return (
-    <div>Lobby</div>
-  )
+    <View>
+      <Text>Lobby</Text>
+    </View>
+  );
 }
 
-export default Lobby
+export default Lobby;
