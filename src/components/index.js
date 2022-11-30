@@ -1,7 +1,4 @@
 import Lobby from "./lobby/Lobby";
+import Registration from "./auth/registration/Registration";
 
-
-export {
-    Lobby,
-
-}
+export { Registration, Lobby };
