@@ -62,8 +62,10 @@ axiosInstanceToken.interceptors.response.use(
 );
 
 export async function responseApi(response) {
+    console.log("response", response)
   return {
     data: response?.data,
+    
     status: response?.status,
   };
 }

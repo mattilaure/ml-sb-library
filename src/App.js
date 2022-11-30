@@ -26,7 +26,7 @@ function App() {
         <TextField placeholder="placeholder" callback={loggingText}/>
       </header> */}
 
-      <LoginScreen />
+      <Registration />
     </div>
   );
 }
