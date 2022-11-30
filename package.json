@@ -1,7 +1,7 @@
 {
   "name": "library-ml-sb",
   "main": "dist/index.js",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": false,
   "files": [
     "dist",

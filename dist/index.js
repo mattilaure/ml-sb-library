@@ -3,21 +3,25 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-<<<<<<< HEAD
 Object.defineProperty(exports, "Lobby", {
   enumerable: true,
   get: function get() {
     return _Lobby.default;
   }
 });
-var _Lobby = _interopRequireDefault(require("./lobby/Lobby"));
-=======
+Object.defineProperty(exports, "LoginScreen", {
+  enumerable: true,
+  get: function get() {
+    return _LoginScreen.default;
+  }
+});
 Object.defineProperty(exports, "Registration", {
   enumerable: true,
   get: function get() {
     return _Registration.default;
   }
 });
+var _Lobby = _interopRequireDefault(require("./lobby/Lobby"));
 var _Registration = _interopRequireDefault(require("./auth/registration/Registration"));
->>>>>>> main
+var _LoginScreen = _interopRequireDefault(require("./auth/login/LoginScreen"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

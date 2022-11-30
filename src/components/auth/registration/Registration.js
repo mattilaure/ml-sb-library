@@ -12,6 +12,7 @@ import Button from "../../button/Button";
 
 //api
 import { signUpApi } from "../../../services/api/registration/registrationApi";
+import axios from "axios";
 
 function Registration() {
   const [state, setState] = useState({
@@ -39,9 +40,9 @@ function Registration() {
   }
 
   async function signUp() {
-    console.log("signup")
-    await signUpApi(state);
-    console.log("after await")
+    const resp = await signUpApi(state)
+    console.log(resp);
+
   }
 
   return (

@@ -19,7 +19,7 @@ var _default = _reactNative.StyleSheet.create({
     alignItems: 'center'
   },
   signUpContainerWeb: {
-    height: 450,
+    height: 350,
     width: 500,
     padding: 30,
     backgroundColor: 'white',
@@ -41,6 +41,11 @@ var _default = _reactNative.StyleSheet.create({
   },
   label: {
     marginBottom: 10
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20
   },
   //mobile
   containerMobile: {

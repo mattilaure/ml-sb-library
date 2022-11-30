@@ -4,6 +4,7 @@ import Button from './components/button/Button';
 import TextField from './components/textField/TextField';
 import Registration from './components/auth/registration/Registration';
 import LoginScreen from './components/auth/login/LoginScreen';
+import Home from './components/home/Home';
 
 function App() {
   return (

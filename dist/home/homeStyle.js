@@ -10,7 +10,7 @@ var styles = _reactNative.StyleSheet.create({
   container: {
     display: "flex",
     width: SCREEN.width,
-    height: SCREEN.height,
+    height: SCREEN.height - 1,
     position: "relative",
     flexDirection: "column"
   },
@@ -25,9 +25,9 @@ var styles = _reactNative.StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#faf0dc",
+    backgroundColor: "#00763E",
     borderWidth: 5,
-    borderColor: "#d5b895",
+    borderColor: "#F4D103",
     width: "40%",
     height: "60%",
     gap: 20
@@ -41,12 +41,12 @@ var styles = _reactNative.StyleSheet.create({
     height: "10%",
     paddingRight: "2%"
   },
-  //   greyBox: {
-  //     position: "absolute",
-  //     width: "100%",
-  //     height: "100%",
-  //     backdropFilter: "blur(4px)",
-  //   },
+  greyBox: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backdropFilter: "blur(4px)"
+  },
   image: {
     position: "absolute",
     width: "100%",
