@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "lobbyStyle.js";
+import {styles} from "./lobbyStyle.js";
 
 //react-native
 import { View, Text } from "react-native";
