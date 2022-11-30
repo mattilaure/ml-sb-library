@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { randomize } from "../utils/utils";
 
 //props.users[{user1}, {user2}, ecc.]
-
+let turnCounter = 1;
 function Game(props) {
-
   const [state, setState] = useState({
     users: [
       {
@@ -37,8 +36,8 @@ function Game(props) {
     userChoice: "",
     activePlayer: 0,
     ended: false,
-  });
 
+  });
 
   const SETTEMMEZZO = 7.5;
   const SEEDS = ["SPADE", "COPPE", "DENARI", "BASTONI"];
@@ -46,19 +45,25 @@ function Game(props) {
   const VALUES = [1, 2, 3, 4, 5, 6, 7, 0.5, 0.5, 0.5];
 
   let alreadyDrawn = [];
-  let turnCounter = 1;
+
 
   // const SEEDS = ["SPADE", "COPPE", "DENARI", "BASTONI"];
   // const FIGURES = ["RE", "FANTE", "CAVALLO", "NUMBER"];
   // const VALUES = [1, 2, 3, 4, 5, 6, 7, 0.5, 0.5, 0.5]
 
-  useEffect(()=>{
-    setHands()
-  },[])
+  useEffect(() => {
+    setHands();
+  }, []);
 
   useEffect(()=>{
-    console.log("hands iniziali",state.handsInGame);
+    drawFirst()
+    console.log("handsInGame",state.handsInGame);
   },[state.handsInGame])
+
+
+  // useEffect(() => {
+  //   console.log("hands iniziali", state.handsInGame);
+  // }, [state.handsInGame]);
 
   function setHands() {
     let hands = [];
@@ -76,70 +81,84 @@ function Game(props) {
     });
     setState({
       ...state,
-      handsInGame: hands
-    })
+      handsInGame: hands,
+    });
   }
 
   function drawFirst() {
+    console.log("drawfirst");
     //settiamo la prima carta per ciascun player
     state.handsInGame.forEach((hand) => {
       let newCard = generateCard();
-      hand.cardValue += newCard.value
+      hand.cardValue += newCard.value;
       hand.cards.push(newCard);
     });
   }
 
-  function checkActiveUser(){
+  function checkActiveUser() {
     let flag = false;
-    state.handsInGame.forEach((hand)=>{
+    state.handsInGame.forEach((hand) => {
       if (hand.continuePlaying && hand.underSetteMezzo) {
-        flag = true
+        flag = true;
       }
-    })
-    return flag
+    });
+    return flag;
   }
 
   //GAME
   function game() {
   
-    if(turnCounter===1){
-      drawFirst()
-    }
-    if(checkActiveUser()){
-      turnCounter ++;
-      if(state.activePlayer === state.handsInGame.length){
-        state.activePlayer = 0
-      }
-      handleClick(state.handsInGame[state.activePlayer])
-  
-      // handsGame.forEach((hand,index)=>{
-      //   if(hand.continuePlaying && hand.underSetteMezzo){
-      //     hand.turn = true
-      //   }
-      // })
-      
-    }else{
-      setState({
-        ...state,
-        ended:true
-      })
-    }
-  
-   
+      if (checkActiveUser()) {
+        turnCounter ++;
+        if (state.activePlayer === state.handsInGame.length) {
+          state.activePlayer = 0;
+        }
 
+        handleClick(state.handsInGame[state.activePlayer]);
+        handleStay(state.handsInGame[state.activePlayer]);
+
+        // handsGame.forEach((hand,index)=>{
+        //   if(hand.continuePlaying && hand.underSetteMezzo){
+        //     hand.turn = true
+        //   }
+        // })
+      } else {
+        setState({
+          ...state,
+          ended: true,
+        });
+      }
+    
   }
 
-  function handleClick(currentHand){
-    console.log(currentHand);
-    // let handsCopy = state.hands;
-    // console.log(handsCopy);
+  function handleClick(currentHand) {
+
+    let handsCopy = state.handsInGame;
     let card = generateCard();
     currentHand.cards.push(card);
     currentHand.cardValue += card.value;
+    if(currentHand.cardValue > 7.5){
+      currentHand.underSetteMezzo = false
+    }
+    handsCopy[state.activePlayer] = currentHand;
+    console.log(handsCopy);
 
     setState({
       ...state,
       activePlayer: state.activePlayer + 1,
+      handsInGame: handsCopy
+      
+    });
+  }
+
+
+  function handleStay(currentHand){
+    let handsCopy = state.handsInGame;
+    currentHand.continuePlaying = false;
+    handsCopy[state.activePlayer] = currentHand;
+    setState({
+      ...state,
+      handsInGame: handsCopy
     })
   }
 
@@ -147,18 +166,18 @@ function Game(props) {
     let value = randomize(10);
     let seed = randomize(4);
     let figure = "";
-    switch(value){
-      case 7: 
-        figure = FIGURES[1]
+    switch (value) {
+      case 7:
+        figure = FIGURES[1];
         break;
-      case 8: 
-        figure = FIGURES[2]
+      case 8:
+        figure = FIGURES[2];
         break;
-      case 9: 
-        figure = FIGURES[0]
+      case 9:
+        figure = FIGURES[0];
         break;
       default:
-          figure = FIGURES[3]
+        figure = FIGURES[3];
     }
     let newCard = {
       value: VALUES[value],
@@ -191,7 +210,6 @@ function Game(props) {
     return isUnique;
   }
 
-
   //Il gioco deve svolgersi così: All'inizio il banco dà una carta a tutti i giocatori.
   //a turno ogni player sceglie se ottenere un'altra carta o fermarsi. Si somma il totale delle carte ottenute (figure valgono mezzo),
   //e se il totale è superiore a 7.5, il giocatore viene eliminato. La partita finisce quando tutti i giocatori rimasti hanno deciso di
@@ -202,9 +220,7 @@ function Game(props) {
       <div>Game</div>
       <button onClick={game}>Gioca</button>
 
-      
-        <div>{state?.hands?.user?.username}</div>
-      
+      <div>{state?.hands?.user?.username}</div>
     </>
   );
 }
