@@ -8,7 +8,10 @@ function Lobby() {
   return (
     <View style={styles.container}>
       <View style={styles.lobbyBox}>
-        <Text>Lobby</Text>
+        <Text style={styles.user}>Lobby</Text>
+        <Text style={styles.user}>Lobby</Text>
+        <Text style={styles.user}>Lobby</Text>
+        <Text style={styles.user}>Lobby</Text>
       </View>
     </View>
   );
