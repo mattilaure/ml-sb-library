@@ -31,7 +31,11 @@ function App() {
         <TextField placeholder="placeholder" callback={loggingText}/>
       </header> */}
 
+<<<<<<< HEAD
       <Home />
+=======
+      <Game />
+>>>>>>> 4ba05d930088fff37cbdd6fa27469d5b6ba48ba7
     </div>
   );
 }

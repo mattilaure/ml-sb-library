@@ -2,10 +2,16 @@ import React, { useState, useEffect } from "react";
 import { ImageBackground, View, Image, Text } from "react-native";
 import { randomize } from "../utils/utils";
 import { style } from "./gameStyle";
+import { CARDS } from "../assets/images/index";
 
 //props.users[{user1}, {user2}, ecc.]
 let turnCounter = 1;
 function Game(props) {
+  const CARTAPESCATA = {
+    value: 0.5,
+    seed: "COPPE",
+    figure: "FANTE",
+  };
   const [state, setState] = useState({
     users: [
       {
@@ -204,6 +210,41 @@ function Game(props) {
     return isUnique;
   }
 
+  function filterNumbers(cardArray) {
+    let card = null;
+    card = CARDS.filter((elem) => {
+      return (
+        elem.NAME.includes(cardArray.value.toString()) &&
+        elem.NAME.includes(cardArray.seed)
+      );
+    });
+    console.log("numberCard", card)
+    return card[0].CARD;
+  }
+
+  function filterFigures(cardArray) {
+    let card = null;
+    card = CARDS.filter((elem) => {
+      return (
+        elem.NAME.includes(cardArray.seed) &&
+        elem.NAME.includes(cardArray.figure)
+      );
+    });
+    console.log("figureCard", card[0].CARD)
+
+    return card[0].CARD;
+  }
+
+  function displayCard(card) {
+    let cardToDisplay = null;
+    if (card.value >= 1) {
+      cardToDisplay = filterNumbers(card);
+    } else {
+      cardToDisplay = filterFigures(card);
+    }
+    return cardToDisplay;
+  }
+
   //Il gioco deve svolgersi così: All'inizio il banco dà una carta a tutti i giocatori.
   //a turno ogni player sceglie se ottenere un'altra carta o fermarsi. Si somma il totale delle carte ottenute (figure valgono mezzo),
   //e se il totale è superiore a 7.5, il giocatore viene eliminato. La partita finisce quando tutti i giocatori rimasti hanno deciso di
@@ -211,24 +252,29 @@ function Game(props) {
   //nessuno vince.
   return (
     <View style={style.gameContainer}>
-        <View style={style.house}>
+      <View style={style.house}>
+        <Image
+          style={style.img}
+          source={require("../assets/images/cards-deck.png.webp")}
+          resizeMode="cover"
+        />
+      </View>
+      <View>
+        <Text>CIAOOO</Text>
+      </View>
+
+      <View style={style.players}>
+        <View style={style.test}>
           <Image
-            style={style.img}
-            source={require("../assets/images/cards-deck.png.webp")}
-            resizeMode="cover"
+            source={displayCard(CARTAPESCATA)}
+            style={{ width: 50, height: 100 }}
           />
         </View>
-        <View>
-          <Text>CIAOOO</Text>
-        </View>
-
-        <View style={style.players}>
-            <View style={style.test}></View>
-            <View style={style.test}></View>
-            <View style={style.test}></View>
-            <View style={style.test}></View>
-            <View style={style.test}></View>
-        </View>
+        <View style={style.test}></View>
+        <View style={style.test}></View>
+        <View style={style.test}></View>
+        <View style={style.test}></View>
+      </View>
     </View>
   );
 }
