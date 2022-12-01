@@ -12,11 +12,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function ModalCustom(props) {
   return /*#__PURE__*/_react.default.createElement(_reactNative.Modal, {
+    transparent: true,
     animationType: props.animation,
     visible: props.visible,
     onShow: props.onShow,
-    onDismiss: props.onDismiss,
-    style: _modalCustomStyle.styles.modalCustom
+    onDismiss: props.onDismiss
   }, props.children);
 }
 var _default = ModalCustom;

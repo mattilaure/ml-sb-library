@@ -51,6 +51,15 @@ var styles = _reactNative.StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%"
+  },
+  modalCustom: {
+    display: "flex",
+    alignSelf: "center",
+    backgroundColor: "red",
+    borderWidth: 5,
+    borderColor: "#d5b895",
+    width: 500,
+    height: 500
   }
 });
 exports.styles = styles;

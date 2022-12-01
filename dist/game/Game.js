@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
+var _reactNative = require("react-native");
 var _utils = require("../utils/utils");
+var _gameStyle = require("./gameStyle");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -23,7 +25,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //props.users[{user1}, {user2}, ecc.]
 var turnCounter = 1;
 function Game(props) {
-  var _state$hands, _state$hands$user;
   var _useState = (0, _react.useState)({
       users: [{
         id: 1,
@@ -207,9 +208,27 @@ function Game(props) {
   //e se il totale è superiore a 7.5, il giocatore viene eliminato. La partita finisce quando tutti i giocatori rimasti hanno deciso di
   //fermarsi o vengono tutti eliminati. Il giocatore vincente è quello che si è avvicinato di più a 7.5, ma se tutti vengono eliminati
   //nessuno vince.
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", null, "Game"), /*#__PURE__*/_react.default.createElement("button", {
-    onClick: game
-  }, "Gioca"), /*#__PURE__*/_react.default.createElement("div", null, state === null || state === void 0 ? void 0 : (_state$hands = state.hands) === null || _state$hands === void 0 ? void 0 : (_state$hands$user = _state$hands.user) === null || _state$hands$user === void 0 ? void 0 : _state$hands$user.username));
+  return /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.gameContainer
+  }, /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.house
+  }, /*#__PURE__*/_react.default.createElement(_reactNative.Image, {
+    style: _gameStyle.style.img,
+    source: require("../assets/images/cards-deck.png.webp"),
+    resizeMode: "cover"
+  })), /*#__PURE__*/_react.default.createElement(_reactNative.View, null, /*#__PURE__*/_react.default.createElement(_reactNative.Text, null, "CIAOOO")), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.players
+  }, /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.test
+  }), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.test
+  }), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.test
+  }), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.test
+  }), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _gameStyle.style.test
+  })));
 }
 var _default = Game;
 exports.default = _default;

@@ -1,7 +1,7 @@
 {
   "name": "library-ml-sb",
   "main": "dist/index.js",
-  "version": "0.1.21",
+  "version": "0.1.27",
   "private": false,
   "files": [
     "dist",
@@ -64,6 +64,12 @@
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "@react-native-async-storage/async-storage": "^1.17.11",
+    "@reduxjs/toolkit": "^1.8.5",
+    "react-redux": "^8.0.4",
+    "redux-logger": "^3.0.6",
+    "axios": "^1.2.0"
+    
   }
 }

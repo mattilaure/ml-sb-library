@@ -1,8 +1,9 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { styles } from "./lobbyStyle.js";
 
 //react-native
 import { View, Text,Image } from "react-native";
+
 
 //components
 import Button from "../button/Button";
@@ -10,6 +11,22 @@ import Button from "../button/Button";
 function Lobby() {
 
   const [state,setState] = useState()
+  let ws = null;
+
+  function connectWs(){
+    ws = new WebSocket("ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws");
+    ws.onopen = ()=>{
+      console.log('CONNECTED TO WS');
+    }
+
+  }
+
+  function sendMessage(message){
+    setTimeout(() => {
+      this.ws.send(JSON.stringify(message));
+   }, 200);
+  }
+
   
   return (
     <View style={styles.container}>

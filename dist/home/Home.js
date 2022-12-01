@@ -40,6 +40,9 @@ function Home() {
       modalVisible: !state.modalVisible
     }));
   }
+  function tempClick() {
+    console.log("Functioning Button");
+  }
   return /*#__PURE__*/_react.default.createElement(_reactNative.View, {
     style: _homeStyle.styles.container
   }, /*#__PURE__*/_react.default.createElement(_reactNative.ImageBackground, {
@@ -51,28 +54,35 @@ function Home() {
   }, /*#__PURE__*/_react.default.createElement(_reactNative.View, {
     style: _homeStyle.styles.sideBox
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
-    label: "LOGIN"
+    label: "LOGIN",
+    callback: tempClick
   }), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    label: "REGISTRATI"
+    label: "REGISTRATI",
+    callback: tempClick
   }), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    label: "Impostazioni"
+    label: "Impostazioni",
+    callback: editUser
   })), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
     style: _homeStyle.styles.centralBox
   }, /*#__PURE__*/_react.default.createElement(_ModalCustom.default, {
     visible: state.modalVisible,
     animation: "fade"
+  }, /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+    style: _homeStyle.styles.modalCustom
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     label: "ciao",
     callback: editUser
-  })), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
+  }))), /*#__PURE__*/_react.default.createElement(_reactNative.View, {
     style: _homeStyle.styles.centralBoxBackground
   }, /*#__PURE__*/_react.default.createElement(_reactNative.Text, null, "Sette e mezzo!"), /*#__PURE__*/_react.default.createElement(_Button.default, {
-    label: "GIOCA"
+    label: "GIOCA",
+    callback: tempClick
   }), /*#__PURE__*/_react.default.createElement(_Button.default, {
     label: "CLASSIFICA",
     style: {
       marginTop: 10
-    }
+    },
+    callback: tempClick
   }))))));
 }
 var _default = Home;

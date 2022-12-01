@@ -20,9 +20,9 @@ const axiosInstanceToken = axios.create({
 
 
 axiosInstanceToken.interceptors.request.use(
-  (config) => {
+  async (config) => {
     //si puo usare qualsisi storage
-    const token = getTokenFromStorage();
+    const token =  await getTokenFromStorage();
     if (token) {
       config.headers = {
         Authorization: `Bearer ${token}`,

@@ -46,8 +46,10 @@ function LoginScreen() {
   }
 
   async function signIn(){
+    console.log('dentro signin');
     const resp = await signinApi(state);
     if(resp.status === 200){
+      console.log('signin fatto');
       setTokenInStorage(resp.data.token);
       setRefreshTokenInStorage(resp.data.refreshToken)
     }
@@ -89,6 +91,9 @@ function LoginScreen() {
                 <View style={style.labelInput}>
                   <Text style={style.label}>Password</Text>
                   <TextField placeholder={"Inserisci password"} callback={handleChangePassword}/>
+                </View>
+                <View style={style.buttonContainer}>
+                  <Button label={"Accedi"} callback={handleClick} />
                 </View>
               </View>
             </>

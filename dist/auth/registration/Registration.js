@@ -73,8 +73,7 @@ function Registration() {
               return (0, _registrationApi.signUpApi)(state);
             case 2:
               resp = _context.sent;
-              console.log(resp);
-            case 4:
+            case 3:
             case "end":
               return _context.stop();
           }

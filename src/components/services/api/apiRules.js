@@ -1,6 +1,7 @@
 const APIROUTES = {
     registration: "/user/registration",
-    login: "/signin"
+    login: "/signin",
+    createLobby: "/lobby"
 }
 
 export default APIROUTES;
