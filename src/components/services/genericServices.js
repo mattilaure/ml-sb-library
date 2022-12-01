@@ -1,6 +1,8 @@
 import axios from "axios";
 import PROPERTIES from "./properties";
 import { updateAuthTokenApi } from "./api/updateAuthTokenApi.js";
+import {Platform} from "react-native";
+import { getTokenFromStorage,setTokenInStorage,setRefreshTokenInStorage } from "../utils/storage";
 
 //instanza axios per chiamate non autenticate
 const axiosInstance = axios.create({
@@ -15,10 +17,12 @@ const axiosInstanceToken = axios.create({
 });
 
 //intercetta le richieste con autenticazione, controlla nello storage se esiste il token e lo inserisce nell'header,
+
+
 axiosInstanceToken.interceptors.request.use(
   (config) => {
     //si puo usare qualsisi storage
-    const token = localStorage.getItem("onlusToken");
+    const token = getTokenFromStorage();
     if (token) {
       config.headers = {
         Authorization: `Bearer ${token}`,
@@ -50,8 +54,8 @@ axiosInstanceToken.interceptors.response.use(
       console.log(updateToken);
       if (updateToken.status === 200) {
         const { token, refreshToken } = updateToken.data;
-        localStorage.setItem("onlusToken", token);
-        localStorage.setItem("onlusRefreshToken", refreshToken);
+        setTokenInStorage(token);
+        setRefreshTokenInStorage(refreshToken);
         //riprova a fare la chiamata avendo il token aggiornato nello storage
         return axiosInstanceToken(originalRequest);
       }

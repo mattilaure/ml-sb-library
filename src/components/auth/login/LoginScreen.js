@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import {setUser} from "../../ducks/user/userDuck";
 
 //storage
-import {getFromStorage,setInStorage} from "../../utils/storage";
+import {getFromStorage,setInStorage, setRefreshTokenInStorage, setTokenInStorage} from "../../utils/storage";
 
 function LoginScreen() {
 
@@ -48,7 +48,8 @@ function LoginScreen() {
   async function signIn(){
     const resp = await signinApi(state);
     if(resp.status === 200){
-      setInStorage(resp.data.token,resp.data.refreshToken)
+      setTokenInStorage(resp.data.token);
+      setRefreshTokenInStorage(resp.data.refreshToken)
     }
   }
 
