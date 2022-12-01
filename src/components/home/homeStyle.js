@@ -27,7 +27,6 @@ export const styles = StyleSheet.create({
     width: "40%",
     height: "60%",
     gap: 20,
-    
   },
   sideBox: {
     display: "flex",
@@ -38,16 +37,24 @@ export const styles = StyleSheet.create({
     height: "10%",
     paddingRight: "2%",
   },
-    greyBox: {
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      backdropFilter: "blur(4px)",
-    },
+  greyBox: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backdropFilter: "blur(4px)",
+  },
   image: {
     position: "absolute",
     width: "100%",
     height: "100%",
   },
-  
+  modalCustom: {
+    display: "flex",
+    alignSelf: "center",
+    backgroundColor: "red",
+    borderWidth: 5,
+    borderColor: "#d5b895",
+    width: 500,
+    height: 500,
+  },
 });

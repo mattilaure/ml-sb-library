@@ -26,32 +26,42 @@ function Home() {
   function editUser() {
     setState({ ...state, modalVisible: !state.modalVisible });
   }
+
+  function tempClick() {
+    console.log("Functioning Button");
+  }
+
   return (
     <View style={styles.container}>
-      
-        <ImageBackground
-          source={background}
-          resizeMode="cover"
-          style={styles.image}
-        >
-          <View style={styles.greyBox}>
+      <ImageBackground
+        source={background}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View style={styles.greyBox}>
           <View style={styles.sideBox}>
-            <Button label="LOGIN" />
-            <Button label="REGISTRATI" />
-            <Button label="Impostazioni" />
+            <Button label="LOGIN" callback={tempClick} />
+            <Button label="REGISTRATI" callback={tempClick} />
+            <Button label="Impostazioni" callback={editUser} />
           </View>
           <View style={styles.centralBox}>
             <ModalCustom visible={state.modalVisible} animation="fade">
-              <Button label="ciao" callback={editUser} />
+              <View style={styles.modalCustom}>
+                <Button label="ciao" callback={editUser} />
+              </View>
             </ModalCustom>
             <View style={styles.centralBoxBackground}>
               <Text>Sette e mezzo!</Text>
-              <Button label="GIOCA" />
-              <Button label="CLASSIFICA" style={{ marginTop: 10 }} />
+              <Button label="GIOCA" callback={tempClick} />
+              <Button
+                label="CLASSIFICA"
+                style={{ marginTop: 10 }}
+                callback={tempClick}
+              />
             </View>
           </View>
-          </View>
-        </ImageBackground>
+        </View>
+      </ImageBackground>
     </View>
   );
 }
