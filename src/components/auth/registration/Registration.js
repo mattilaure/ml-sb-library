@@ -13,9 +13,6 @@ import Button from "../../button/Button";
 //api
 import { signUpApi } from "../../services/api/registration/registrationApi";
 
-//redux
-import {setUser} from "../../ducks/user/userDuck";
-import { useDispatch } from "react-redux";
 
 function Registration() {
 
@@ -25,7 +22,6 @@ function Registration() {
     username: "",
   });
 
-  const dispatch = useDispatch()
 
   function handleChangeUser(e) {
     setState({ ...state, username: e });
@@ -47,9 +43,6 @@ function Registration() {
 
   async function signUp() {
     const resp = await signUpApi(state)
-    if(resp.status === 200){
-      dispatch(setUser(resp.data))
-    }
   }
 
   return (

@@ -15,6 +15,10 @@ import {setUser} from "../../ducks/user/userDuck";
 //storage
 import {getFromStorage,setInStorage, setRefreshTokenInStorage, setTokenInStorage} from "../../utils/storage";
 
+//redux
+import {setUser} from "../../ducks/user/userDuck";
+import { useDispatch } from "react-redux";
+
 function LoginScreen() {
 
   const dispatch = useDispatch();
@@ -46,12 +50,12 @@ function LoginScreen() {
   }
 
   async function signIn(){
-    console.log('dentro signin');
     const resp = await signinApi(state);
     if(resp.status === 200){
-      console.log('signin fatto');
       setTokenInStorage(resp.data.token);
       setRefreshTokenInStorage(resp.data.refreshToken)
+
+      dispatch(setUser(resp.data))
     }
   }
 
