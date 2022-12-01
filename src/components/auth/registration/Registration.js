@@ -11,10 +11,10 @@ import TextField from "../../textField/TextField";
 import Button from "../../button/Button";
 
 //api
-import { signUpApi } from "../../../services/api/registration/registrationApi";
-import axios from "axios";
+import { signUpApi } from "../../services/api/registration/registrationApi";
 
 function Registration() {
+
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -32,7 +32,7 @@ function Registration() {
   }
 
   function handleClick() {
-    if (state.email !== "" && state.password !== "" && state.username !== "") {
+    if (state?.email !== "" && state?.password !== "" && state?.username !== "") {
       signUp();
     } else {
       console.log("error");
@@ -41,8 +41,6 @@ function Registration() {
 
   async function signUp() {
     const resp = await signUpApi(state)
-    console.log(resp);
-
   }
 
   return (
@@ -84,7 +82,7 @@ function Registration() {
           ) : (
             <>
               <Text style={{ color: "white" }}>Registrati</Text>
-              <View style={style.signUpContainer}>
+              <View style={style.signUpContainerMobile}>
                 <View style={style.labelInput}>
                   <Text style={style.label}>Username</Text>
                   <TextField

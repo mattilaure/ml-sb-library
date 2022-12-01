@@ -39,7 +39,7 @@ player:{
 greenCircle:{
   height:20,
   width:20,
-  borderRadius: '50%',
+  borderRadius: 10,
   backgroundColor: 'green',
   marginLeft: 10,
   marginTop:10

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { styles } from "./lobbyStyle.js";
 
 //react-native
@@ -8,27 +8,30 @@ import { View, Text,Image } from "react-native";
 import Button from "../button/Button";
 
 function Lobby() {
+
+  const [state,setState] = useState()
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Lobby di gioco</Text>
       <View style={styles.lobbyBox}>
       <Image 
         style={styles.imgLeft}
-        source={require('../../assets/baubles.png')}
+        source={require('../assets/images/baubles.png')}
         width={100}
         height={100}
         resizeMode={"contain"}
       />
       <Image 
         style={styles.imgRight}
-        source={require('../../assets/baubles.png')}
+        source={require('../assets/images/baubles.png')}
         width={100}
         height={100}
         resizeMode={"contain"}
       />
          <Image 
         style={styles.imgCenter}
-        source={require('../../assets/baubles.png')}
+        source={require('../assets/images/baubles.png')}
         width={100}
         height={100}
         resizeMode={"contain"}

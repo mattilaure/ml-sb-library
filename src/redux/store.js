@@ -7,11 +7,11 @@ import { configureStore } from '@reduxjs/toolkit'
 // We'll use redux-logger just as an example of adding another middleware
 import logger from 'redux-logger'
 
-import tokenDuck from './ducks/token/tokenDuck'
+import userDuck from './ducks/user/userDuck'
 
 const reducer = combineReducers({
   // here we will be adding reducers
-  tokenDuck
+  userDuck
 })
 
 const store = configureStore({

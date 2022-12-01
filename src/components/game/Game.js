@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { ImageBackground, View, Image, Text } from "react-native";
 import { randomize } from "../utils/utils";
+import { style } from "./gameStyle";
 
 //props.users[{user1}, {user2}, ecc.]
 let turnCounter = 1;
@@ -36,7 +38,6 @@ function Game(props) {
     userChoice: "",
     activePlayer: 0,
     ended: false,
-
   });
 
   const SETTEMMEZZO = 7.5;
@@ -46,7 +47,6 @@ function Game(props) {
 
   let alreadyDrawn = [];
 
-
   // const SEEDS = ["SPADE", "COPPE", "DENARI", "BASTONI"];
   // const FIGURES = ["RE", "FANTE", "CAVALLO", "NUMBER"];
   // const VALUES = [1, 2, 3, 4, 5, 6, 7, 0.5, 0.5, 0.5]
@@ -55,11 +55,10 @@ function Game(props) {
     setHands();
   }, []);
 
-  useEffect(()=>{
-    drawFirst()
-    console.log("handsInGame",state.handsInGame);
-  },[state.handsInGame])
-
+  useEffect(() => {
+    drawFirst();
+    console.log("handsInGame", state.handsInGame);
+  }, [state.handsInGame]);
 
   // useEffect(() => {
   //   console.log("hands iniziali", state.handsInGame);
@@ -107,38 +106,35 @@ function Game(props) {
 
   //GAME
   function game() {
-  
-      if (checkActiveUser()) {
-        turnCounter ++;
-        if (state.activePlayer === state.handsInGame.length) {
-          state.activePlayer = 0;
-        }
-
-        handleClick(state.handsInGame[state.activePlayer]);
-        handleStay(state.handsInGame[state.activePlayer]);
-
-        // handsGame.forEach((hand,index)=>{
-        //   if(hand.continuePlaying && hand.underSetteMezzo){
-        //     hand.turn = true
-        //   }
-        // })
-      } else {
-        setState({
-          ...state,
-          ended: true,
-        });
+    if (checkActiveUser()) {
+      turnCounter++;
+      if (state.activePlayer === state.handsInGame.length) {
+        state.activePlayer = 0;
       }
-    
+
+      handleClick(state.handsInGame[state.activePlayer]);
+      handleStay(state.handsInGame[state.activePlayer]);
+
+      // handsGame.forEach((hand,index)=>{
+      //   if(hand.continuePlaying && hand.underSetteMezzo){
+      //     hand.turn = true
+      //   }
+      // })
+    } else {
+      setState({
+        ...state,
+        ended: true,
+      });
+    }
   }
 
   function handleClick(currentHand) {
-
     let handsCopy = state.handsInGame;
     let card = generateCard();
     currentHand.cards.push(card);
     currentHand.cardValue += card.value;
-    if(currentHand.cardValue > 7.5){
-      currentHand.underSetteMezzo = false
+    if (currentHand.cardValue > 7.5) {
+      currentHand.underSetteMezzo = false;
     }
     handsCopy[state.activePlayer] = currentHand;
     console.log(handsCopy);
@@ -146,20 +142,18 @@ function Game(props) {
     setState({
       ...state,
       activePlayer: state.activePlayer + 1,
-      handsInGame: handsCopy
-      
+      handsInGame: handsCopy,
     });
   }
 
-
-  function handleStay(currentHand){
+  function handleStay(currentHand) {
     let handsCopy = state.handsInGame;
     currentHand.continuePlaying = false;
     handsCopy[state.activePlayer] = currentHand;
     setState({
       ...state,
-      handsInGame: handsCopy
-    })
+      handsInGame: handsCopy,
+    });
   }
 
   function generateCard() {
@@ -216,12 +210,26 @@ function Game(props) {
   //fermarsi o vengono tutti eliminati. Il giocatore vincente è quello che si è avvicinato di più a 7.5, ma se tutti vengono eliminati
   //nessuno vince.
   return (
-    <>
-      <div>Game</div>
-      <button onClick={game}>Gioca</button>
+    <View style={style.gameContainer}>
+        <View style={style.house}>
+          <Image
+            style={style.img}
+            source={require("../assets/images/cards-deck.png.webp")}
+            resizeMode="cover"
+          />
+        </View>
+        <View>
+          <Text>CIAOOO</Text>
+        </View>
 
-      <div>{state?.hands?.user?.username}</div>
-    </>
+        <View style={style.players}>
+            <View style={style.test}></View>
+            <View style={style.test}></View>
+            <View style={style.test}></View>
+            <View style={style.test}></View>
+            <View style={style.test}></View>
+        </View>
+    </View>
   );
 }
 

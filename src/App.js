@@ -5,6 +5,10 @@ import TextField from './components/textField/TextField';
 import Registration from './components/auth/registration/Registration';
 import LoginScreen from './components/auth/login/LoginScreen';
 import Home from './components/home/Home';
+import { Lobby } from './components';
+import React, {useState} from "react"
+import Game from './components/game/Game';
+
 
 function App() {
   return (
@@ -27,7 +31,8 @@ function App() {
         <TextField placeholder="placeholder" callback={loggingText}/>
       </header> */}
 
-      <Registration />
+
+      <Game />
     </div>
   );
 }

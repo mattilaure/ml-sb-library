@@ -8,10 +8,16 @@ import TextField from "../../textField/TextField";
 import Button from "../../button/Button";
 //style
 import style from "./loginStyle";
-import { signinApi } from "../../../services/api/login/loginApi";
+import { signinApi } from "../../services/api/login/loginApi";
+import { useDispatch } from "react-redux";
+import {setUser} from "../../ducks/user/userDuck";
+
+//storage
+import {getFromStorage,setInStorage} from "../../utils/storage";
 
 function LoginScreen() {
 
+  const dispatch = useDispatch();
   const [state,setState] = useState({
     email : "",
     password: ""
@@ -32,7 +38,7 @@ function LoginScreen() {
   }
 
   function handleClick(){
-    if(state.email !== "" && state.password !== ""){
+    if(state?.email !== "" && state?.password !== ""){
       signIn()
     }else{
       console.log("error");
@@ -41,7 +47,9 @@ function LoginScreen() {
 
   async function signIn(){
     const resp = await signinApi(state);
-    console.log(resp);
+    if(resp.status === 200){
+      setInStorage(resp.data.token,resp.data.refreshToken)
+    }
   }
 
   return (
@@ -72,7 +80,7 @@ function LoginScreen() {
           ) : (
             <>
               <Text style={{ color: "white" }}>Login</Text>
-              <View style={style.signUpContainer}>
+              <View style={style.signUpContainerMobile}>
                 <View style={style.labelInput}>
                   <Text style={style.label}>Email</Text>
                   <TextField placeholder={"Inserisci email"} callback={handleChangeMail}/>
