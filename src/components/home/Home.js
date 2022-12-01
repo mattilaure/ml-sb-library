@@ -32,34 +32,39 @@ function Home() {
 
   let ws = null;
 
-  const currentUserId = useSelector((state)=>state.userDuck.user.id);
+  const currentUserId = useSelector((state) => state.userDuck.user.id);
 
   useEffect(() => {
     createLobby();
   }, []);
 
-  async function createLobby(){
+  async function createLobby() {
     const resp = await createNewLobby({});
-    if(resp.status === 200){
+    if (resp.status === 200) {
       //navigate to lobby page
     }
   }
 
   const connectWs = () => {
-    ws = new WebSocket("ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws");
-    ws.onopen = ()=>{
-      console.log('CONNECTED TO WS');
-    }
+    ws = new WebSocket(
+      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
+    );
+    ws.onopen = () => {
+      console.log("CONNECTED TO WS");
+    };
     ws.onmessage = (event) => {
-      console.log("messaggio");
-    }
-}
+      console.log("messaggio", event);
+    };
+    ws.onerror = (error) => {
+      console.error(error);
+    };
+  };
 
-const sendMessage = (message) =>{
-  setTimeout(() => {
+  const sendMessage = (message) => {
+    setTimeout(() => {
       ws.send(JSON.stringify(message));
-   }, 200);
-}
+    }, 200);
+  };
 
   function editUser() {
     setState({ ...state, modalVisible: !state.modalVisible });
@@ -68,10 +73,9 @@ const sendMessage = (message) =>{
   function play() {
     connectWs();
     sendMessage({
-      "user_id": currentUserId,
-      "method": "connectLobby"
-    })
- 
+      user_id: currentUserId,
+      method: "connectLobby",
+    });
   }
 
   return (
@@ -83,8 +87,8 @@ const sendMessage = (message) =>{
       >
         <View style={styles.greyBox}>
           <View style={styles.sideBox}>
-            <Button label="LOGIN" callback={()=>console.log('ciao')} />
-            <Button label="REGISTRATI" callback={()=>console.log('ciao')} />
+            <Button label="LOGIN" callback={() => console.log("ciao")} />
+            <Button label="REGISTRATI" callback={() => console.log("ciao")} />
             <Button label="Impostazioni" callback={editUser} />
           </View>
           <View style={styles.centralBox}>
@@ -99,7 +103,7 @@ const sendMessage = (message) =>{
               <Button
                 label="CLASSIFICA"
                 style={{ marginTop: 10 }}
-                callback={()=>console.log('ciao')}
+                callback={() => console.log("ciao")}
               />
             </View>
           </View>
