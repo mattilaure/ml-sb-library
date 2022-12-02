@@ -14,7 +14,7 @@ import { Navigate } from "react-router-dom";
 
 function Lobby() {
   const [state, setState] = useState({
-    users: []
+    users: [],
   });
   const navigate = useNavigate();
   let ws = null;
@@ -22,6 +22,7 @@ function Lobby() {
   ws = new WebSocket(
     "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
   );
+  
   ws.onopen = () => {
     console.log("CONNECTED TO WS");
   };
@@ -30,16 +31,12 @@ function Lobby() {
     console.error("error", error);
   };
 
-
-useEffect(()=>{
-  ws.onmessage = (event) => {
-    const obj = JSON.parse(event.data);
-    console.log(obj);
-  };
-})
-
-
- 
+  useEffect(() => {
+    ws.onmessage = (event) => {
+      const obj = JSON.parse(event.data);
+      console.log(obj);
+    };
+  });
 
   function sendMessage(message) {
     setTimeout(() => {
@@ -47,10 +44,10 @@ useEffect(()=>{
     }, 200);
   }
 
-  async function exitLobby(){
+  async function exitLobby() {
     const resp = await deleteLobby();
-    if(resp.status === 200){
-      navigate("/")
+    if (resp.status === 200) {
+      navigate("/");
     }
   }
 
@@ -97,7 +94,7 @@ useEffect(()=>{
           <Button label="Gioca" />
         </View>
 
-        <Button label="Exit" callback={exitLobby}/>
+        <Button label="Exit" callback={exitLobby} />
       </View>
     </View>
   );

@@ -37,7 +37,7 @@ function Home() {
   let ws = null;
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
-  console.log("currentUserId",currentUserId);
+  console.log("currentUserId", currentUserId);
 
   async function createLobby() {
     const resp = await createNewLobby();
@@ -81,22 +81,24 @@ function Home() {
       user_id: currentUserId,
       method: "connectLobby",
     });
+    ws.close();
     navigate("/lobby");
   }
 
   function handleChange(e) {
     setState({ ...state, textField: e });
-    
   }
 
   async function join() {
     if (state.textField !== null) {
       const resp = await joinLobby(state.textField);
       if (resp.status === 200) {
+        connectWs();
         sendMessage({
           user_id: currentUserId,
           method: "connectLobby",
         });
+        ws.close();
         navigate("/lobby");
       }
     }
