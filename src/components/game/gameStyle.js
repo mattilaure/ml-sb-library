@@ -7,7 +7,7 @@ export const style = StyleSheet.create({
         width: screen.width,
         height: screen.height - 1,
         backgroundColor: "#00763E",
-        alignItems:'center'
+        alignItems:'center',
     },
     house:{
         width: 200,
@@ -28,8 +28,8 @@ export const style = StyleSheet.create({
         padding: 30
     },
     test:{
-        height: 100,
-        width:100,
+        height: 200,
+        width:200,
         backgroundColor: 'red'
     }
 })

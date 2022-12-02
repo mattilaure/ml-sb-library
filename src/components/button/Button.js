@@ -7,7 +7,10 @@ function Button(props) {
     props.callback();
   }
   return (
-    <TouchableOpacity onPress={handleCallback} style={styles.buttonBasic}>
+    <TouchableOpacity
+      onPress={handleCallback}
+      style={[styles.buttonBasic, { width: props.buttonWidth }]}
+    >
       <Text style={styles.textBasic}>{props.label}</Text>
     </TouchableOpacity>
   );
