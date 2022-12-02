@@ -92,8 +92,11 @@ function Home() {
   async function join() {
     if (state.textField !== null) {
       const resp = await joinLobby(state.textField);
-      console.log(resp);
       if (resp.status === 200) {
+        sendMessage({
+          user_id: currentUserId,
+          method: "connectLobby",
+        });
         navigate("/lobby");
       }
     }

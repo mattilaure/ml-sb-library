@@ -17,24 +17,29 @@ function Lobby() {
     users: []
   });
   const navigate = useNavigate();
-
   let ws = null;
 
-  function connectWs() {
-    ws = new WebSocket(
-      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-    );
-    ws.onopen = () => {
-      console.log("CONNECTED TO WS");
-    };
-    ws.onmessage = (event) => {
-      const obj = JSON.parse(event.data);
-      console.log(obj);
-    };
-    ws.onerror = (error) => {
-      console.error("error", error);
-    };
-  }
+  ws = new WebSocket(
+    "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
+  );
+  ws.onopen = () => {
+    console.log("CONNECTED TO WS");
+  };
+
+  ws.onerror = (error) => {
+    console.error("error", error);
+  };
+
+
+useEffect(()=>{
+  ws.onmessage = (event) => {
+    const obj = JSON.parse(event.data);
+    console.log(obj);
+  };
+})
+
+
+ 
 
   function sendMessage(message) {
     setTimeout(() => {
