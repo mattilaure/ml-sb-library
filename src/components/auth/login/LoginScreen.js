@@ -13,12 +13,9 @@ import { useDispatch } from "react-redux";
 import {setUser} from "../../ducks/user/userDuck";
 
 //storage
-import {getFromStorage,setInStorage, setRefreshTokenInStorage, setTokenInStorage} from "../../utils/storage";
+import { setRefreshTokenInStorage, setTokenInStorage} from "../../utils/storage";
 
 //redux
-import {setUser} from "../../ducks/user/userDuck";
-import { useDispatch } from "react-redux";
-
 function LoginScreen() {
 
   const dispatch = useDispatch();
