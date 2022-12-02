@@ -38,6 +38,10 @@ useEffect(()=>{
   };
 })
 
+function connectWs(){
+  
+}
+
 
  
 

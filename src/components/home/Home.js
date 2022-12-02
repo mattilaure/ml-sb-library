@@ -93,6 +93,7 @@ function Home() {
     if (state.textField !== null) {
       const resp = await joinLobby(state.textField);
       if (resp.status === 200) {
+        connectWs();
         sendMessage({
           user_id: currentUserId,
           method: "connectLobby",
