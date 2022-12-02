@@ -13,32 +13,31 @@ import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 import { Navigate } from "react-router-dom";
 
 //redux
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 
 function Lobby() {
   const [state, setState] = useState({
     users: [],
   });
+
   const navigate = useNavigate();
-  const currentUserId = useSelector((state) => state.userDuck.user.id)
+  const currentUserId = useSelector((state) => state.userDuck.user.id);
   let ws = null;
 
-  useEffect(()=>{
+  useEffect(() => {
     connectWs();
     sendMessage({
       method: "connectLobby",
-      user_id: currentUserId
-    })
-  },[])
-
-  useEffect(() => {
+      user_id: currentUserId,
+    });
     ws.onmessage = (event) => {
       const obj = JSON.parse(event.data);
-      console.log(obj);
+      setState({
+        ...state,
+        users: obj.users,
+      });
     };
-  });
-
-
+  }, []);
 
   const connectWs = () => {
     ws = new WebSocket(
@@ -47,14 +46,14 @@ function Lobby() {
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
     };
-    ws.onmessage = (event) => {
-      const obj = JSON.parse(event.data);
-      console.log("event.data.lobbyNumber", obj.idLobby);
-      setState(obj.idLobby);
-    };
-    ws.onerror = (error) => {
-      console.error("error", error);
-    };
+    // ws.onmessage = (event) => {
+    //   const obj = JSON.parse(event.data);
+    //   console.log("event.data.lobbyNumber", obj.idLobby);
+    //   setState(obj.idLobby);
+    // };
+    // ws.onerror = (error) => {
+    //   console.error("error", error);
+    // };
   };
 
   const sendMessage = (message) => {
@@ -69,6 +68,15 @@ function Lobby() {
       navigate("/");
     }
   }
+
+  const mappingUsers = (user,index) => {
+    return (
+      <View style={styles.player} key={index + Date.now()}>
+        <Text style={styles.user}>{user?.username}</Text>
+        <View style={styles.greenCircle}></View>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -95,18 +103,7 @@ function Lobby() {
           height={100}
           resizeMode={"contain"}
         />
-        <View style={styles.player}>
-          <Text style={styles.user}>Player</Text>
-          <View style={styles.greenCircle}></View>
-        </View>
-        <View style={styles.player}>
-          <Text style={styles.user}>Player</Text>
-          <View style={styles.greenCircle}></View>
-        </View>
-        <View style={styles.player}>
-          <Text style={styles.user}>Player</Text>
-          <View style={styles.greenCircle}></View>
-        </View>
+        {state.users.map(mappingUsers)}
 
         {/* play */}
         <View style={styles.btnContainer}>

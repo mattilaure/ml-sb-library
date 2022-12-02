@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 //React Native
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text, ImageBackground, Image } from "react-native";
 
 //Custom Components
 import Button from "../button/Button";
@@ -43,11 +43,9 @@ function Home() {
     const resp = await createNewLobby();
     console.log("resp", resp);
     if (resp.status === 200) {
-      navigate("/lobby")
+      navigate("/lobby");
     }
   }
-
- 
 
   function editUser() {
     setState({ ...state, modalVisible: !state.modalVisible });
@@ -78,6 +76,7 @@ function Home() {
         style={styles.image}
       >
         <View style={styles.greyBox}>
+        
           <View style={styles.sideBox}>
             <Button label="LOGIN" callback={() => navigate("/login")} />
             <Button
@@ -86,6 +85,11 @@ function Home() {
             />
             <Button label="Impostazioni" callback={editUser} />
           </View>
+          <Image
+            source={require("../assets/images/LOGO.png")}
+            resizeMode="contain"
+            style={styles.logo}  
+          />
           <View style={styles.centralBox}>
             <ModalCustom visible={state.modalVisible} animation="fade">
               <View style={styles.modalCustom}>

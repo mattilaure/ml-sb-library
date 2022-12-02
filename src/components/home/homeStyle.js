@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: "80%",
+    height: "70%",
   },
   centralBoxBackground: {
     display: "flex",
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "#F4D103",
     width: "40%",
-    height: "60%",
+    height: "70%",
     gap: 20,
   },
   sideBox: {
@@ -57,4 +57,7 @@ export const styles = StyleSheet.create({
     width: 500,
     height: 500,
   },
+  logo:{
+    height: '20%'
+  }
 });
