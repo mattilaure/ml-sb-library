@@ -4,6 +4,8 @@ import { randomize } from "../utils/utils";
 import { style } from "./gameStyle";
 import { CARDS } from "../assets/images/index";
 import { useSelector } from "react-redux";
+import Button from "../button/Button";
+import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 
 //props.users[{user1}, {user2}, ecc.]
 let turnCounter = 1;
@@ -22,23 +24,23 @@ function Game(props) {
     // ended: false,
   });
 
-  let ws = null;
   const currentUserId = useSelector((state) => state.userDuck.user.id);
+  let ws = null;
   console.log(currentUserId);
 
   useEffect(() => {
     connectWs();
     sendMessage({
-      method: "startMatch",
       user_id: currentUserId,
+      method: "startMatch",
     });
-    ws.onmessage = (event) => {
-      const obj = JSON.parse(event.data);
-      setState({
-        ...state,
-        users: obj.users,
-      });
-    };
+    // ws.onmessage = (event) => {
+    //   const obj = JSON.parse(event.data);
+    //   setState({
+    //     ...state,
+    //     users: obj.users,
+    //   });
+    // };
   }, []);
 
   const connectWs = () => {
@@ -48,6 +50,11 @@ function Game(props) {
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
     };
+    console.log("prima dell'onMessage")
+    ws.onmessage = (event) => {
+      const obj = JSON.parse(event.data);
+      console.log("obj", obj);
+    };
   };
 
   const sendMessage = (message) => {
@@ -56,7 +63,27 @@ function Game(props) {
     }, 200);
   };
 
-  useEffect(() => {}, []);
+  function handleCardClick() {
+    connectWs();
+    sendMessage({
+      user_id: currentUserId,
+      method: "requestCard",
+    });
+  }
+
+  // function checkEndMatch() {
+  //   sendMessage({
+  //     user_id: currentUserId,
+  //     method: "checkEndMatch",
+  //   });
+  //   ws.onmessage = (event) => {
+  //     const obj = JSON.parse(event.data);
+  //     console.log(obj);
+  //   };
+  // }
+  async function exitLobby() {
+    const resp = await deleteLobby();
+  }
 
   function game() {}
 
@@ -102,6 +129,8 @@ function Game(props) {
     return cardToDisplay;
   }
 
+ 
+
   return (
     <View style={style.gameContainer}>
       <View style={style.house}>
@@ -129,6 +158,8 @@ function Game(props) {
             source={displayCard(CARTAPESCATA)}
             style={{ height: 300 }}
           />
+          <Button label="carta" callback={handleCardClick} />
+          <Button label="esci" callback={exitLobby} />
         </View>
         <View style={style.test}></View>
       </View>

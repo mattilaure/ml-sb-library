@@ -46,14 +46,6 @@ function Lobby() {
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
     };
-    // ws.onmessage = (event) => {
-    //   const obj = JSON.parse(event.data);
-    //   console.log("event.data.lobbyNumber", obj.idLobby);
-    //   setState(obj.idLobby);
-    // };
-    // ws.onerror = (error) => {
-    //   console.error("error", error);
-    // };
   };
 
   const sendMessage = (message) => {
@@ -69,7 +61,7 @@ function Lobby() {
     }
   }
 
-  const mappingUsers = (user,index) => {
+  const mappingUsers = (user, index) => {
     return (
       <View style={styles.player} key={index + Date.now()}>
         <Text style={styles.user}>{user?.username}</Text>
@@ -77,6 +69,10 @@ function Lobby() {
       </View>
     );
   };
+
+  function handlePlay() {
+    navigate("/game");
+  }
 
   return (
     <View style={styles.container}>
@@ -107,7 +103,7 @@ function Lobby() {
 
         {/* play */}
         <View style={styles.btnContainer}>
-          <Button label="Gioca" />
+          <Button label="Gioca" callback={handlePlay} />
         </View>
 
         <Button label="Exit" callback={exitLobby} />
