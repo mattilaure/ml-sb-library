@@ -1,6 +1,7 @@
 import Lobby from "./lobby/Lobby";
 import Registration from "./auth/registration/Registration";
 import LoginScreen from "./auth/login/LoginScreen";
+import Home from "./home/Home";
 
 //utils
 import {
@@ -16,6 +17,7 @@ import userDuck from "./ducks/user/userDuck";
 export {
   Registration,
   Lobby,
+  Home,
   LoginScreen,
   userDuck,
   getRefreshTokenFromStorage,

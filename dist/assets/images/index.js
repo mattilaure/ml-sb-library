@@ -45,5 +45,125 @@ var _SPA8 = _interopRequireDefault(require("./8SPA.jpg"));
 var _SPA9 = _interopRequireDefault(require("./9SPA.jpg"));
 var _SPA10 = _interopRequireDefault(require("./10SPA.jpg"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var CARDS = [_BAS.default, _BAS2.default, _BAS3.default, _BAS4.default, _BAS5.default, _BAS6.default, _BAS7.default, _BAS8.default, _BAS9.default, _BAS10.default, _DEN.default, _DEN2.default, _DEN3.default, _DEN4.default, _DEN5.default, _DEN6.default, _DEN7.default, _DEN8.default, _DEN9.default, _DEN10.default, _COP.default, _COP2.default, _COP3.default, _COP4.default, _COP5.default, _COP6.default, _COP7.default, _COP8.default, _COP9.default, _COP10.default, _SPA.default, _SPA2.default, _SPA3.default, _SPA4.default, _SPA5.default, _SPA6.default, _SPA7.default, _SPA8.default, _SPA9.default, _SPA10.default];
+var CARDS = [{
+  CARD: _BAS.default,
+  NAME: "BASTONI1"
+}, {
+  CARD: _BAS2.default,
+  NAME: "BASTONI2"
+}, {
+  CARD: _BAS3.default,
+  NAME: "BASTONI3"
+}, {
+  CARD: _BAS4.default,
+  NAME: "BASTONI4"
+}, {
+  CARD: _BAS5.default,
+  NAME: "BASTONI5"
+}, {
+  CARD: _BAS6.default,
+  NAME: "BASTONI6"
+}, {
+  CARD: _BAS7.default,
+  NAME: "BASTONI7"
+}, {
+  CARD: _BAS8.default,
+  NAME: "BASTONIFANTE"
+}, {
+  CARD: _BAS9.default,
+  NAME: "BASTONICAVALLO"
+}, {
+  CARD: _BAS10.default,
+  NAME: "BASTONIRE"
+}, {
+  CARD: _DEN.default,
+  NAME: "DENARI1"
+}, {
+  CARD: _DEN2.default,
+  NAME: "DENARI2"
+}, {
+  CARD: _DEN3.default,
+  NAME: "DENARI3"
+}, {
+  CARD: _DEN4.default,
+  NAME: "DENARI4"
+}, {
+  CARD: _DEN5.default,
+  NAME: "DENARI5"
+}, {
+  CARD: _DEN6.default,
+  NAME: "DENARI6"
+}, {
+  CARD: _DEN7.default,
+  NAME: "DENARI7"
+}, {
+  CARD: _DEN8.default,
+  NAME: "DENARIFANTE"
+}, {
+  CARD: _DEN9.default,
+  NAME: "DENARICAVALLO"
+}, {
+  CARD: _DEN10.default,
+  NAME: "DENARIRE"
+}, {
+  CARD: _COP.default,
+  NAME: "COPPE1"
+}, {
+  CARD: _COP2.default,
+  NAME: "COPPE2"
+}, {
+  CARD: _COP3.default,
+  NAME: "COPPE3"
+}, {
+  CARD: _COP4.default,
+  NAME: "COPPE4"
+}, {
+  CARD: _COP5.default,
+  NAME: "COPPE5"
+}, {
+  CARD: _COP6.default,
+  NAME: "COPPE6"
+}, {
+  CARD: _COP7.default,
+  NAME: "COPPE7"
+}, {
+  CARD: _COP8.default,
+  NAME: "COPPEFANTE"
+}, {
+  CARD: _COP9.default,
+  NAME: "COPPECAVALLO"
+}, {
+  CARD: _COP10.default,
+  NAME: "COPPERE"
+}, {
+  CARD: _SPA.default,
+  NAME: "SPADE1"
+}, {
+  CARD: _SPA2.default,
+  NAME: "SPADE2"
+}, {
+  CARD: _SPA3.default,
+  NAME: "SPADE3"
+}, {
+  CARD: _SPA4.default,
+  NAME: "SPADE4"
+}, {
+  CARD: _SPA5.default,
+  NAME: "SPADE5"
+}, {
+  CARD: _SPA6.default,
+  NAME: "SPADE6"
+}, {
+  CARD: _SPA7.default,
+  NAME: "SPADE7"
+}, {
+  CARD: _SPA8.default,
+  NAME: "SPADEFANTE"
+}, {
+  CARD: _SPA9.default,
+  NAME: "SPADECAVALLO"
+}, {
+  CARD: _SPA10.default,
+  NAME: "SPADERE"
+}];
 exports.CARDS = CARDS;

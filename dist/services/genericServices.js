@@ -35,18 +35,36 @@ var axiosInstanceToken = _axios.default.create({
 
 //intercetta le richieste con autenticazione, controlla nello storage se esiste il token e lo inserisce nell'header,
 
-axiosInstanceToken.interceptors.request.use(function (config) {
-  //si puo usare qualsisi storage
-  var token = (0, _storage.getTokenFromStorage)();
-  if (token) {
-    config.headers = {
-      Authorization: "Bearer ".concat(token),
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    };
-  }
-  return config;
-}, function (error) {
+axiosInstanceToken.interceptors.request.use( /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(config) {
+    var token;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return (0, _storage.getTokenFromStorage)();
+          case 2:
+            token = _context.sent;
+            if (token) {
+              config.headers = {
+                Authorization: "Bearer ".concat(token),
+                Accept: "application/json",
+                "Content-Type": "application/json"
+              };
+            }
+            return _context.abrupt("return", config);
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}(), function (error) {
   return Promise.reject(error);
 });
 
@@ -59,106 +77,83 @@ function (response) {
 /*#__PURE__*/
 //se con errore
 function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(error) {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(error) {
     var originalRequest, updateToken, _updateToken$data, token, refreshToken;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             console.log("responseError", error);
             originalRequest = error.config; //se l'errore è 401 usa il refresh Token per ricevere il nuovo token
             if (!(error.response.status === 401 && !originalRequest._retry)) {
-              _context.next = 13;
+              _context2.next = 13;
               break;
             }
             originalRequest._retry = true;
-            _context.next = 6;
+            _context2.next = 6;
             return (0, _updateAuthTokenApi.updateAuthTokenApi)();
           case 6:
-            updateToken = _context.sent;
+            updateToken = _context2.sent;
             console.log(updateToken);
             if (!(updateToken.status === 200)) {
-              _context.next = 13;
+              _context2.next = 13;
               break;
             }
             _updateToken$data = updateToken.data, token = _updateToken$data.token, refreshToken = _updateToken$data.refreshToken;
             (0, _storage.setTokenInStorage)(token);
             (0, _storage.setRefreshTokenInStorage)(refreshToken);
             //riprova a fare la chiamata avendo il token aggiornato nello storage
-            return _context.abrupt("return", axiosInstanceToken(originalRequest));
+            return _context2.abrupt("return", axiosInstanceToken(originalRequest));
           case 13:
-            return _context.abrupt("return", Promise.reject(error));
+            return _context2.abrupt("return", Promise.reject(error));
           case 14:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return function (_x) {
-    return _ref.apply(this, arguments);
-  };
-}());
-function responseApi(_x2) {
-  return _responseApi.apply(this, arguments);
-}
-function _responseApi() {
-  _responseApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(response) {
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            console.log("response", response);
-            return _context2.abrupt("return", {
-              data: response === null || response === void 0 ? void 0 : response.data,
-              status: response === null || response === void 0 ? void 0 : response.status
-            });
-          case 2:
           case "end":
             return _context2.stop();
         }
       }
     }, _callee2);
   }));
+  return function (_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}());
+function responseApi(_x3) {
   return _responseApi.apply(this, arguments);
 }
-function responseError(_x3) {
-  return _responseError.apply(this, arguments);
-}
-function _responseError() {
-  _responseError = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(error) {
-    var _error$response;
+function _responseApi() {
+  _responseApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(response) {
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            console.log("response", response);
             return _context3.abrupt("return", {
-              message: error === null || error === void 0 ? void 0 : error.message,
-              status: error === null || error === void 0 ? void 0 : (_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status
+              data: response === null || response === void 0 ? void 0 : response.data,
+              status: response === null || response === void 0 ? void 0 : response.status
             });
-          case 1:
+          case 2:
           case "end":
             return _context3.stop();
         }
       }
     }, _callee3);
   }));
+  return _responseApi.apply(this, arguments);
+}
+function responseError(_x4) {
   return _responseError.apply(this, arguments);
 }
-function getApi(_x4) {
-  return _getApi.apply(this, arguments);
-}
-function _getApi() {
-  _getApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(resource) {
+function _responseError() {
+  _responseError = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(error) {
+    var _error$response;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            return _context4.abrupt("return", axiosInstanceToken.get(resource).then(function (response) {
-              return responseApi(response);
-            }).catch(function (error) {
-              return responseError(error);
-            }));
+            return _context4.abrupt("return", {
+              message: error === null || error === void 0 ? void 0 : error.message,
+              status: error === null || error === void 0 ? void 0 : (_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status
+            });
           case 1:
           case "end":
             return _context4.stop();
@@ -166,18 +161,18 @@ function _getApi() {
       }
     }, _callee4);
   }));
+  return _responseError.apply(this, arguments);
+}
+function getApi(_x5) {
   return _getApi.apply(this, arguments);
 }
-function getApiNoAuth(_x5) {
-  return _getApiNoAuth.apply(this, arguments);
-}
-function _getApiNoAuth() {
-  _getApiNoAuth = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(resource) {
+function _getApi() {
+  _getApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(resource) {
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            return _context5.abrupt("return", axiosInstance.get(resource).then(function (response) {
+            return _context5.abrupt("return", axiosInstanceToken.get(resource).then(function (response) {
               return responseApi(response);
             }).catch(function (error) {
               return responseError(error);
@@ -189,18 +184,18 @@ function _getApiNoAuth() {
       }
     }, _callee5);
   }));
+  return _getApi.apply(this, arguments);
+}
+function getApiNoAuth(_x6) {
   return _getApiNoAuth.apply(this, arguments);
 }
-function postApi(_x6, _x7) {
-  return _postApi.apply(this, arguments);
-}
-function _postApi() {
-  _postApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(resource, obj) {
+function _getApiNoAuth() {
+  _getApiNoAuth = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(resource) {
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            return _context6.abrupt("return", axiosInstanceToken.post(resource, obj).then(function (response) {
+            return _context6.abrupt("return", axiosInstance.get(resource).then(function (response) {
               return responseApi(response);
             }).catch(function (error) {
               return responseError(error);
@@ -212,18 +207,18 @@ function _postApi() {
       }
     }, _callee6);
   }));
+  return _getApiNoAuth.apply(this, arguments);
+}
+function postApi(_x7, _x8) {
   return _postApi.apply(this, arguments);
 }
-function postApiNoAuth(_x8, _x9) {
-  return _postApiNoAuth.apply(this, arguments);
-}
-function _postApiNoAuth() {
-  _postApiNoAuth = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(resource, obj) {
+function _postApi() {
+  _postApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(resource, obj) {
     return _regeneratorRuntime().wrap(function _callee7$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
-            return _context7.abrupt("return", axiosInstance.post(resource, obj).then(function (response) {
+            return _context7.abrupt("return", axiosInstanceToken.post(resource, obj).then(function (response) {
               return responseApi(response);
             }).catch(function (error) {
               return responseError(error);
@@ -235,18 +230,18 @@ function _postApiNoAuth() {
       }
     }, _callee7);
   }));
+  return _postApi.apply(this, arguments);
+}
+function postApiNoAuth(_x9, _x10) {
   return _postApiNoAuth.apply(this, arguments);
 }
-function putApi(_x10, _x11) {
-  return _putApi.apply(this, arguments);
-}
-function _putApi() {
-  _putApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(resource, obj) {
+function _postApiNoAuth() {
+  _postApiNoAuth = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(resource, obj) {
     return _regeneratorRuntime().wrap(function _callee8$(_context8) {
       while (1) {
         switch (_context8.prev = _context8.next) {
           case 0:
-            return _context8.abrupt("return", axiosInstanceToken.put(resource, obj).then(function (response) {
+            return _context8.abrupt("return", axiosInstance.post(resource, obj).then(function (response) {
               return responseApi(response);
             }).catch(function (error) {
               return responseError(error);
@@ -258,18 +253,18 @@ function _putApi() {
       }
     }, _callee8);
   }));
+  return _postApiNoAuth.apply(this, arguments);
+}
+function putApi(_x11, _x12) {
   return _putApi.apply(this, arguments);
 }
-function deleteApi(_x12) {
-  return _deleteApi.apply(this, arguments);
-}
-function _deleteApi() {
-  _deleteApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(resource) {
+function _putApi() {
+  _putApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(resource, obj) {
     return _regeneratorRuntime().wrap(function _callee9$(_context9) {
       while (1) {
         switch (_context9.prev = _context9.next) {
           case 0:
-            return _context9.abrupt("return", axiosInstanceToken.delete(resource).then(function (response) {
+            return _context9.abrupt("return", axiosInstanceToken.put(resource, obj).then(function (response) {
               return responseApi(response);
             }).catch(function (error) {
               return responseError(error);
@@ -280,6 +275,29 @@ function _deleteApi() {
         }
       }
     }, _callee9);
+  }));
+  return _putApi.apply(this, arguments);
+}
+function deleteApi(_x13) {
+  return _deleteApi.apply(this, arguments);
+}
+function _deleteApi() {
+  _deleteApi = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(resource) {
+    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            return _context10.abrupt("return", axiosInstanceToken.delete(resource).then(function (response) {
+              return responseApi(response);
+            }).catch(function (error) {
+              return responseError(error);
+            }));
+          case 1:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10);
   }));
   return _deleteApi.apply(this, arguments);
 }

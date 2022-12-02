@@ -19,7 +19,7 @@ var styles = _reactNative.StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: "80%"
+    height: "70%"
   },
   centralBoxBackground: {
     display: "flex",
@@ -29,7 +29,7 @@ var styles = _reactNative.StyleSheet.create({
     borderWidth: 5,
     borderColor: "#F4D103",
     width: "40%",
-    height: "60%",
+    height: "70%",
     gap: 20
   },
   sideBox: {
@@ -60,6 +60,9 @@ var styles = _reactNative.StyleSheet.create({
     borderColor: "#d5b895",
     width: 500,
     height: 500
+  },
+  logo: {
+    height: '20%'
   }
 });
 exports.styles = styles;
