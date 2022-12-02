@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { styles } from "./lobbyStyle.js";
 
+//router dom
+import { useNavigate } from "react-router-dom";
+
 //react-native
 import { View, Text, Image } from "react-native";
 
 //components
 import Button from "../button/Button";
+import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
+import { Navigate } from "react-router-dom";
 
 function Lobby() {
-  const [state, setState] = useState();
+  const [state, setState] = useState({
+    users: []
+  });
+  const navigate = useNavigate();
 
   let ws = null;
 
@@ -19,12 +27,26 @@ function Lobby() {
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
     };
+    ws.onmessage = (event) => {
+      const obj = JSON.parse(event.data);
+      console.log(obj);
+    };
+    ws.onerror = (error) => {
+      console.error("error", error);
+    };
   }
 
   function sendMessage(message) {
     setTimeout(() => {
       this.ws.send(JSON.stringify(message));
     }, 200);
+  }
+
+  async function exitLobby(){
+    const resp = await deleteLobby();
+    if(resp.status === 200){
+      navigate("/")
+    }
   }
 
   return (
@@ -69,6 +91,8 @@ function Lobby() {
         <View style={styles.btnContainer}>
           <Button label="Gioca" />
         </View>
+
+        <Button label="Exit" callback={exitLobby}/>
       </View>
     </View>
   );

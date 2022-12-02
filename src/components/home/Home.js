@@ -37,11 +37,7 @@ function Home() {
   let ws = null;
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
-  console.log(currentUserId);
-
-  useEffect(() => {
-    createLobby();
-  }, []);
+  console.log("currentUserId",currentUserId);
 
   async function createLobby() {
     const resp = await createNewLobby();
@@ -79,6 +75,7 @@ function Home() {
   }
 
   function play() {
+    createLobby();
     connectWs();
     sendMessage({
       user_id: currentUserId,
@@ -89,16 +86,16 @@ function Home() {
 
   function handleChange(e) {
     setState({ ...state, textField: e });
-    console.log("questo è e", e);
+    
   }
 
   async function join() {
-    let resp = null
     if (state.textField !== null) {
-      resp = await joinLobby(state.textField);
-    }
-    if (resp.status === 200) {
-      navigate("/lobby");
+      const resp = await joinLobby(state.textField);
+      console.log(resp);
+      if (resp.status === 200) {
+        navigate("/lobby");
+      }
     }
   }
 
@@ -130,7 +127,7 @@ function Home() {
                 callback={handleChange}
                 placeholder="Inserisci lobby esistente"
               />
-              <Button label="UNISCITI" callback={joinLobby} />
+              <Button label="UNISCITI" callback={join} />
               <Button label="CREA LOBBY" callback={play} />
               <Button
                 label="CLASSIFICA"
