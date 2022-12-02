@@ -39,7 +39,7 @@ function Home() {
   }, []);
 
   async function createLobby(){
-    const resp = await createNewLobby({});
+    const resp = await createNewLobby();
     if(resp.status === 200){
       //navigate to lobby page
     }
