@@ -17,10 +17,13 @@ import {
   setRefreshTokenInStorage,
   setTokenInStorage,
 } from "../../utils/storage";
+import { Navigate } from "react-router-dom";
 
 //navigation
+import { useNavigate } from "react-router-dom";
 
 function LoginScreen() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [state, setState] = useState({
     email: "",
@@ -47,6 +50,7 @@ function LoginScreen() {
     } else {
       console.log("error");
     }
+    navigate("/");
   }
 
   async function signIn() {
@@ -109,7 +113,11 @@ function LoginScreen() {
                   />
                 </View>
                 <View style={style.buttonContainer}>
-                  <Button label={"Accedi"} callback={handleClick} buttonWidth={"50%"} />
+                  <Button
+                    label={"Accedi"}
+                    callback={handleClick}
+                    buttonWidth={"50%"}
+                  />
                 </View>
               </View>
             </>
