@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 //React Native
-import { View, Text, ImageBackground, Platform } from "react-native";
+import { View, Text, ImageBackground } from "react-native";
 
 //Custom Components
 import Button from "../button/Button";
@@ -20,46 +20,59 @@ import { useSelector } from "react-redux";
 import background from "../../assets/Cozy.jpg";
 
 //api
-import { createNewLobby } from "../services/api/lobby/lobbyApi";
+import { createNewLobby, joinLobby } from "../services/api/lobby/lobbyApi";
+import { useNavigate } from "react-router-dom";
 
 //web socket
 // import {sendMessage,connectWs, onMessage, readMessage} from "../utils/webSocket"
 
 function Home() {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     modalVisible: false,
+    lobbyNumber: 0,
+    textField: "",
   });
 
   let ws = null;
 
-  const currentUserId = useSelector((state)=>state.userDuck.user.id);
+  const currentUserId = useSelector((state) => state.userDuck.user.id);
+  console.log(currentUserId);
 
   useEffect(() => {
     createLobby();
   }, []);
 
-  async function createLobby(){
+  async function createLobby() {
     const resp = await createNewLobby();
-    if(resp.status === 200){
+    console.log("resp", resp);
+    if (resp.status === 200) {
       //navigate to lobby page
     }
   }
 
   const connectWs = () => {
-    ws = new WebSocket("ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws");
-    ws.onopen = ()=>{
-      console.log('CONNECTED TO WS');
-    }
+    ws = new WebSocket(
+      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
+    );
+    ws.onopen = () => {
+      console.log("CONNECTED TO WS");
+    };
     ws.onmessage = (event) => {
-      console.log("messaggio");
-    }
-}
+      const obj = JSON.parse(event.data);
+      console.log("event.data.lobbyNumber", obj.idLobby);
+      setState(obj.idLobby);
+    };
+    ws.onerror = (error) => {
+      console.error("error", error);
+    };
+  };
 
-const sendMessage = (message) =>{
-  setTimeout(() => {
+  const sendMessage = (message) => {
+    setTimeout(() => {
       ws.send(JSON.stringify(message));
-   }, 200);
-}
+    }, 200);
+  };
 
   function editUser() {
     setState({ ...state, modalVisible: !state.modalVisible });
@@ -68,10 +81,25 @@ const sendMessage = (message) =>{
   function play() {
     connectWs();
     sendMessage({
-      "user_id": currentUserId,
-      "method": "connectLobby"
-    })
- 
+      user_id: currentUserId,
+      method: "connectLobby",
+    });
+    navigate("/lobby");
+  }
+
+  function handleChange(e) {
+    setState({ ...state, textField: e });
+    console.log("questo è e", e);
+  }
+
+  async function join() {
+    let resp = null
+    if (state.textField !== null) {
+      resp = await joinLobby(state.textField);
+    }
+    if (resp.status === 200) {
+      navigate("/lobby");
+    }
   }
 
   return (
@@ -83,8 +111,11 @@ const sendMessage = (message) =>{
       >
         <View style={styles.greyBox}>
           <View style={styles.sideBox}>
-            <Button label="LOGIN" callback={()=>console.log('ciao')} />
-            <Button label="REGISTRATI" callback={()=>console.log('ciao')} />
+            <Button label="LOGIN" callback={() => navigate("/login")} />
+            <Button
+              label="REGISTRATI"
+              callback={() => navigate("/registration")}
+            />
             <Button label="Impostazioni" callback={editUser} />
           </View>
           <View style={styles.centralBox}>
@@ -95,11 +126,16 @@ const sendMessage = (message) =>{
             </ModalCustom>
             <View style={styles.centralBoxBackground}>
               <Text>Sette e mezzo!</Text>
-              <Button label="GIOCA" callback={play} />
+              <TextField
+                callback={handleChange}
+                placeholder="Inserisci lobby esistente"
+              />
+              <Button label="UNISCITI" callback={joinLobby} />
+              <Button label="CREA LOBBY" callback={play} />
               <Button
                 label="CLASSIFICA"
                 style={{ marginTop: 10 }}
-                callback={()=>console.log('ciao')}
+                callback={() => console.log("ciao")}
               />
             </View>
           </View>

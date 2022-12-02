@@ -1,38 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-import Button from './components/button/Button';
-import TextField from './components/textField/TextField';
-import Registration from './components/auth/registration/Registration';
-import LoginScreen from './components/auth/login/LoginScreen';
-import Home from './components/home/Home';
-import { Lobby } from './components';
-import React, {useState} from "react"
-import Game from './components/game/Game';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+//components
+import Registration from "./components/auth/registration/Registration";
+import LoginScreen from "./components/auth/login/LoginScreen";
+import Home from "./components/home/Home";
+import Lobby from "./components/lobby/Lobby";
 
 function App() {
   return (
-
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Button callback={logging} label="classifica"/>
-        <TextField placeholder="placeholder" callback={loggingText}/>
-      </header> */}
-
-      <Home />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/lobby" element={<Lobby />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
