@@ -50,6 +50,8 @@ function LoginScreen() {
   async function signIn(){
     const resp = await signinApi(state);
     if(resp.status === 200){
+      console.log("token",resp.data.token);
+      console.log("refreshToken",resp.data.refreshToken);
       setTokenInStorage(resp.data.token);
       setRefreshTokenInStorage(resp.data.refreshToken)
 
