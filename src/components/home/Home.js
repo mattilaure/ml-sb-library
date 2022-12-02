@@ -16,8 +16,6 @@ import { styles } from "./homeStyle.js";
 //redux
 import { useSelector } from "react-redux";
 
-//Assets
-import background from "../../assets/Cozy.jpg";
 
 //api
 import { createNewLobby, joinLobby } from "../services/api/lobby/lobbyApi";

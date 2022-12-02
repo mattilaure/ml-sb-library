@@ -3,6 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "Home", {
+  enumerable: true,
+  get: function get() {
+    return _Home.default;
+  }
+});
 Object.defineProperty(exports, "Lobby", {
   enumerable: true,
   get: function get() {
@@ -54,6 +60,7 @@ Object.defineProperty(exports, "userDuck", {
 var _Lobby = _interopRequireDefault(require("./lobby/Lobby"));
 var _Registration = _interopRequireDefault(require("./auth/registration/Registration"));
 var _LoginScreen = _interopRequireDefault(require("./auth/login/LoginScreen"));
+var _Home = _interopRequireDefault(require("./home/Home"));
 var _storage = require("./utils/storage");
 var _userDuck = _interopRequireDefault(require("./ducks/user/userDuck"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
