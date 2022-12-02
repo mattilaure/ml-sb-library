@@ -12,24 +12,24 @@ import Button from "../button/Button";
 import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 import { Navigate } from "react-router-dom";
 
+//redux
+import {useSelector} from "react-redux"
+
 function Lobby() {
   const [state, setState] = useState({
     users: [],
   });
   const navigate = useNavigate();
+  const currentUserId = useSelector((state) => state.userDuck.user.id)
   let ws = null;
 
-  ws = new WebSocket(
-    "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-  );
-  
-  ws.onopen = () => {
-    console.log("CONNECTED TO WS");
-  };
-
-  ws.onerror = (error) => {
-    console.error("error", error);
-  };
+  useEffect(()=>{
+    connectWs();
+    sendMessage({
+      method: "connectLobby",
+      user_id: currentUserId
+    })
+  },[])
 
   useEffect(() => {
     ws.onmessage = (event) => {
@@ -38,11 +38,30 @@ function Lobby() {
     };
   });
 
-  function sendMessage(message) {
+
+
+  const connectWs = () => {
+    ws = new WebSocket(
+      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
+    );
+    ws.onopen = () => {
+      console.log("CONNECTED TO WS");
+    };
+    ws.onmessage = (event) => {
+      const obj = JSON.parse(event.data);
+      console.log("event.data.lobbyNumber", obj.idLobby);
+      setState(obj.idLobby);
+    };
+    ws.onerror = (error) => {
+      console.error("error", error);
+    };
+  };
+
+  const sendMessage = (message) => {
     setTimeout(() => {
-      this.ws.send(JSON.stringify(message));
+      ws.send(JSON.stringify(message));
     }, 200);
-  }
+  };
 
   async function exitLobby() {
     const resp = await deleteLobby();

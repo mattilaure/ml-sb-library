@@ -43,32 +43,11 @@ function Home() {
     const resp = await createNewLobby();
     console.log("resp", resp);
     if (resp.status === 200) {
-      //navigate to lobby page
+      navigate("/lobby")
     }
   }
 
-  const connectWs = () => {
-    ws = new WebSocket(
-      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-    );
-    ws.onopen = () => {
-      console.log("CONNECTED TO WS");
-    };
-    ws.onmessage = (event) => {
-      const obj = JSON.parse(event.data);
-      console.log("event.data.lobbyNumber", obj.idLobby);
-      setState(obj.idLobby);
-    };
-    ws.onerror = (error) => {
-      console.error("error", error);
-    };
-  };
-
-  const sendMessage = (message) => {
-    setTimeout(() => {
-      ws.send(JSON.stringify(message));
-    }, 200);
-  };
+ 
 
   function editUser() {
     setState({ ...state, modalVisible: !state.modalVisible });
@@ -76,13 +55,6 @@ function Home() {
 
   function play() {
     createLobby();
-    connectWs();
-    sendMessage({
-      user_id: currentUserId,
-      method: "connectLobby",
-    });
-    ws.close();
-    navigate("/lobby");
   }
 
   function handleChange(e) {
@@ -93,12 +65,6 @@ function Home() {
     if (state.textField !== null) {
       const resp = await joinLobby(state.textField);
       if (resp.status === 200) {
-        connectWs();
-        sendMessage({
-          user_id: currentUserId,
-          method: "connectLobby",
-        });
-        ws.close();
         navigate("/lobby");
       }
     }
