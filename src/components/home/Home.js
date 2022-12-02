@@ -130,7 +130,7 @@ function Home() {
                 callback={handleChange}
                 placeholder="Inserisci lobby esistente"
               />
-              <Button label="UNISCITI" callback={joinLobby} />
+              <Button label="UNISCITI" callback={join} />
               <Button label="CREA LOBBY" callback={play} />
               <Button
                 label="CLASSIFICA"
