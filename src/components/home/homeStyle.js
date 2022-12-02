@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   centralBox: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
     height: "70%",
@@ -22,11 +22,13 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#00763E",
-    borderWidth: 5,
-    borderColor: "#F4D103",
+    borderWidth: 10,
+    borderColor: "#F4D10E",
+    borderStyle: "dotted",
+    borderRadius: 20,
     width: "40%",
     height: "70%",
-    gap: 20,
+    gap: 50,
   },
   sideBox: {
     display: "flex",
@@ -36,6 +38,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: "10%",
     paddingRight: "2%",
+    gap: 20,
   },
   greyBox: {
     position: "absolute",
@@ -53,11 +56,15 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "red",
     borderWidth: 5,
-    borderColor: "#d5b895",
+    borderColor: "#BB2528",
     width: 500,
     height: 500,
   },
-  logo:{
-    height: '20%'
+  logo: {
+    height: "20%",
+  },
+  joinView: {
+    flexDirection: "row",
+    gap: 15
   }
 });

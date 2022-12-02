@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 //components
 import { View, Text, ImageBackground, Platform } from "react-native";
@@ -10,52 +10,54 @@ import Button from "../../button/Button";
 import style from "./loginStyle";
 import { signinApi } from "../../services/api/login/loginApi";
 import { useDispatch } from "react-redux";
-import {setUser} from "../../ducks/user/userDuck";
+import { setUser } from "../../ducks/user/userDuck";
 
 //storage
-import { setRefreshTokenInStorage, setTokenInStorage} from "../../utils/storage";
+import {
+  setRefreshTokenInStorage,
+  setTokenInStorage,
+} from "../../utils/storage";
 
-
+//navigation
 
 function LoginScreen() {
-
   const dispatch = useDispatch();
-  const [state,setState] = useState({
-    email : "",
-    password: ""
-  }) 
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
 
-  function handleChangeMail(e){
+  function handleChangeMail(e) {
     setState({
       ...state,
-      email: e
-    })
+      email: e,
+    });
   }
 
-  function handleChangePassword(e){
+  function handleChangePassword(e) {
     setState({
       ...state,
-      password: e
-    })
+      password: e,
+    });
   }
 
-  function handleClick(){
-    if(state?.email !== "" && state?.password !== ""){
-      signIn()
-    }else{
+  function handleClick() {
+    if (state?.email !== "" && state?.password !== "") {
+      signIn();
+    } else {
       console.log("error");
     }
   }
 
-  async function signIn(){
+  async function signIn() {
     const resp = await signinApi(state);
-    if(resp.status === 200){
-      console.log("token",resp.data.token);
-      console.log("refreshToken",resp.data.refreshToken);
+    if (resp.status === 200) {
+      console.log("token", resp.data.token);
+      console.log("refreshToken", resp.data.refreshToken);
       setTokenInStorage(resp.data.token);
-      setRefreshTokenInStorage(resp.data.refreshToken)
+      setRefreshTokenInStorage(resp.data.refreshToken);
 
-      dispatch(setUser(resp.data))
+      dispatch(setUser(resp.data));
     }
   }
 
@@ -66,38 +68,48 @@ function LoginScreen() {
         resizeMode="cover"
         style={style.image}
       >
-        <View style={style.title}>
+        <View style={style.greyBox}>
           {Platform.OS === "web" ? (
-            <>
-              <h1 style={{ color: "white" }}>Login</h1>
-              <View style={style.signUpContainerWeb}>
-                <View style={style.labelInput}>
-                  <Text style={style.label}>Email</Text>
-                  <TextField placeholder={"Inserisci email"} callback={handleChangeMail}/>
-                </View>
-                <View style={style.labelInput}>
-                  <Text style={style.label}>Password</Text>
-                  <TextField placeholder={"Inserisci password"} callback={handleChangePassword}/>
-                </View>
-                <View style={style.buttonContainer}>
-                  <Button label={"Accedi"} callback={handleClick} />
-                </View>
+            <View style={style.signUpContainerWeb}>
+              <h1 style={{ color: "black", alignSelf: "center" }}>Login</h1>
+              <View style={style.labelInput}>
+                <Text style={style.label}>Email</Text>
+                <TextField
+                  placeholder={"Inserisci email"}
+                  callback={handleChangeMail}
+                />
               </View>
-            </>
+              <View style={style.labelInput}>
+                <Text style={style.label}>Password</Text>
+                <TextField
+                  placeholder={"Inserisci password"}
+                  callback={handleChangePassword}
+                />
+              </View>
+              <View style={style.buttonContainer}>
+                <Button label={"Accedi"} callback={handleClick} />
+              </View>
+            </View>
           ) : (
             <>
               <Text style={{ color: "white" }}>Login</Text>
               <View style={style.signUpContainerMobile}>
                 <View style={style.labelInput}>
                   <Text style={style.label}>Email</Text>
-                  <TextField placeholder={"Inserisci email"} callback={handleChangeMail}/>
+                  <TextField
+                    placeholder={"Inserisci email"}
+                    callback={handleChangeMail}
+                  />
                 </View>
                 <View style={style.labelInput}>
                   <Text style={style.label}>Password</Text>
-                  <TextField placeholder={"Inserisci password"} callback={handleChangePassword}/>
+                  <TextField
+                    placeholder={"Inserisci password"}
+                    callback={handleChangePassword}
+                  />
                 </View>
                 <View style={style.buttonContainer}>
-                  <Button label={"Accedi"} callback={handleClick} />
+                  <Button label={"Accedi"} callback={handleClick} buttonWidth={"50%"} />
                 </View>
               </View>
             </>

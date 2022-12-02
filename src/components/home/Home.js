@@ -74,19 +74,18 @@ function Home() {
         style={styles.image}
       >
         <View style={styles.greyBox}>
-        
           <View style={styles.sideBox}>
             <Button label="LOGIN" callback={() => navigate("/login")} />
             <Button
               label="REGISTRATI"
               callback={() => navigate("/registration")}
             />
-            <Button label="Impostazioni" callback={editUser} />
+            <Button label="MODIFICA DATI" callback={editUser} />
           </View>
           <Image
             source={require("../assets/images/LOGO.png")}
             resizeMode="contain"
-            style={styles.logo}  
+            style={styles.logo}
           />
           <View style={styles.centralBox}>
             <ModalCustom visible={state.modalVisible} animation="fade">
@@ -95,13 +94,15 @@ function Home() {
               </View>
             </ModalCustom>
             <View style={styles.centralBoxBackground}>
-              <Text>Sette e mezzo!</Text>
-              <TextField
-                callback={handleChange}
-                placeholder="Inserisci lobby esistente"
-              />
-              <Button label="UNISCITI" callback={join} />
-              <Button label="CREA LOBBY" callback={play} />
+              <View style={styles.joinView}>
+                <TextField
+                  callback={handleChange}
+                  placeholder="Inserisci lobby esistente"
+                />
+                <Button label="UNISCITI" callback={join} />
+              </View>
+
+              <Button label="CREA NUOVA LOBBY" callback={play} />
               <Button
                 label="CLASSIFICA"
                 style={{ marginTop: 10 }}

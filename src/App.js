@@ -6,6 +6,7 @@ import Registration from "./components/auth/registration/Registration";
 import LoginScreen from "./components/auth/login/LoginScreen";
 import Home from "./components/home/Home";
 import Lobby from "./components/lobby/Lobby";
+import Game from "./components/game/Game";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/registration" element={<Registration />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/lobby" element={<Lobby />} />
+        <Route path="/game" element={<Game />} />
       </Routes>
     </BrowserRouter>
   );
