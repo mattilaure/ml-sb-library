@@ -141,6 +141,14 @@ function Game() {
       user_id: currentUserId,
       method: "requestCard",
     });
+    ws.onmessage = (event) => {
+      let temp = state;
+      const obj = JSON.parse(event.data);
+      if (obj.hasOwnProperty("ended")) {
+        console.log("object in game is", obj);
+        temp = obj;
+      }
+    };
   }
 
   //Ottieni immagine carta
@@ -175,6 +183,9 @@ function Game() {
         }}
       />
       <View style={style.players}>{state.hands.map(mapHands)}</View>
+      <Button label="carta" callback={handleCardClick} />
+      <Button label="stai" callback={handleCardClick} />
+      <Button label="esci" callback={exitLobby} />
     </View>
   );
 }
