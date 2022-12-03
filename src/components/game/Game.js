@@ -23,7 +23,6 @@ function Game() {
     winners: [],
     users: [],
     ended: false,
-    ready: false,
   });
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
@@ -44,7 +43,6 @@ function Game() {
         console.log("object in game is", obj);
         temp = obj;
       }
-      setState(temp);
     };
     ws.onclose = () => {
       console.log("close");
