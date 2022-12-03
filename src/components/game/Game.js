@@ -8,11 +8,9 @@ import Button from "../button/Button";
 import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 import { useLocation } from "react-router-dom";
 
-//props.users[{user1}, {user2}, ecc.]
-let turnCounter = 1;
 let ws = null;
 
-function Game(props) {
+function Game() {
   const location = useLocation();
   console.log(location);
   const CARTAPESCATA = {
@@ -37,6 +35,17 @@ function Game(props) {
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
     };
+
+    ws.onmessage = (event) => {
+      let temp = state;
+      const obj = JSON.parse(event.data);
+      if (obj.hasOwnProperty("ended")) {
+        console.log("object in game is", obj);
+        temp = obj;
+      }
+      setState(temp);
+    };
+
     ws.onclose = () => {
       console.log("close");
       setTimeout(() => connectWs(), 1000);
@@ -49,6 +58,7 @@ function Game(props) {
       user_id: currentUserId,
       method: "startMatch",
     });
+    drawFirst();
   }, []);
 
   const sendMessage = (message) => {
@@ -61,6 +71,10 @@ function Game(props) {
     sendMessage({
       user_id: currentUserId,
       method: "requestCard",
+    });
+    sendMessage({
+      user_id: 15,
+      method: "checkEndMatch",
     });
   }
 
@@ -83,6 +97,29 @@ function Game(props) {
   function handleClick(currentHand) {}
 
   function handleStay(currentHand) {}
+
+  function mapHands(hand, key) {
+    return (
+      <View key={key}>
+        <Button label="carta" callback={handleCardClick} />
+        <Button label="stai" callback={handleCardClick} />
+        <Button label="esci" callback={exitLobby} />
+        {hand.cards.map(mapCards)}
+        {/* Invece del text qui dentro va fatto un altro map con le carte dell'utente*/}
+        <Text>{hand.user.username}</Text>{" "}
+      </View>
+    );
+  }
+
+  function mapCards(card, key) {
+    return (
+      <Image
+        resizeMode="contain"
+        source={displayCard(card)}
+        style={{ height: 300 }}
+      />
+    );
+  }
 
   //Filtra carta non figura
   function filterNumbers(cardArray) {
@@ -111,6 +148,13 @@ function Game(props) {
     return card[0].CARD;
   }
 
+  function drawFirst() {
+    sendMessage({
+      user_id: currentUserId,
+      method: "requestCard",
+    });
+  }
+
   //Ottieni immagine carta
   function displayCard(card) {
     let cardToDisplay = null;
@@ -121,8 +165,6 @@ function Game(props) {
     }
     return cardToDisplay;
   }
-
-  function mapHands() {}
 
   return (
     <View style={style.gameContainer}>
@@ -144,18 +186,7 @@ function Game(props) {
           top: "35%",
         }}
       />
-      <View style={style.players}>
-        <View style={style.test}>
-          <Image
-            resizeMode="contain"
-            source={displayCard(CARTAPESCATA)}
-            style={{ height: 300 }}
-          />
-          <Button label="carta" callback={handleCardClick} />
-          <Button label="esci" callback={exitLobby} />
-        </View>
-        <View style={style.test}></View>
-      </View>
+      <View style={style.players}>{state.hands.map(mapHands)}</View>
     </View>
   );
 }
