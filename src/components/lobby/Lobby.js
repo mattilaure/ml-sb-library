@@ -15,6 +15,8 @@ import { Navigate } from "react-router-dom";
 //redux
 import { useSelector } from "react-redux";
 
+let ws = null;
+
 function Lobby() {
   const [state, setState] = useState({
     users: [],
@@ -22,22 +24,7 @@ function Lobby() {
 
   const navigate = useNavigate();
   const currentUserId = useSelector((state) => state.userDuck.user.id);
-  let ws = null;
-
-  useEffect(() => {
-    connectWs();
-    sendMessage({
-      method: "connectLobby",
-      user_id: currentUserId,
-    });
-    ws.onmessage = (event) => {
-      const obj = JSON.parse(event.data);
-      setState({
-        ...state,
-        users: obj.users,
-      });
-    };
-  }, []);
+  
 
   const connectWs = () => {
     ws = new WebSocket(
@@ -45,8 +32,29 @@ function Lobby() {
     );
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
+      sendMessage({
+        method: "connectLobby",
+        user_id: currentUserId,
+      });
     };
+    ws.onmessage = (event) => {
+      console.log('onmessage', event)
+      const obj = JSON.parse(event.data);
+      setState({
+        ...state,
+        users: obj.users,
+      });
+    };
+
+    ws.onclose = () =>{
+      console.log('close')
+    }
   };
+
+  useEffect(() => {
+    connectWs();
+
+  }, []);
 
   const sendMessage = (message) => {
     setTimeout(() => {
@@ -70,8 +78,13 @@ function Lobby() {
     );
   };
 
-  function handlePlay() {
-    navigate("/game");
+  const handlePlay = () => {
+    const message = {
+      user_id : currentUserId,
+      method: "startMatch"
+    }
+    sendMessage(message);
+    // navigate("/game");
   }
 
   return (

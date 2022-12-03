@@ -9,6 +9,8 @@ import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 
 //props.users[{user1}, {user2}, ecc.]
 let turnCounter = 1;
+let ws = null;
+
 function Game(props) {
   const CARTAPESCATA = {
     value: 0.5,
@@ -25,37 +27,27 @@ function Game(props) {
   });
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
-  let ws = null;
-  console.log(currentUserId);
+  
 
+  const connectWs = () => {
+    ws = new WebSocket(
+      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
+    );
+
+    ws.onopen = () => {
+      console.log("CONNECTED TO WS");
+    };
+   
+  };
+  
   useEffect(() => {
     connectWs();
     sendMessage({
       user_id: currentUserId,
       method: "startMatch",
     });
-    // ws.onmessage = (event) => {
-    //   const obj = JSON.parse(event.data);
-    //   setState({
-    //     ...state,
-    //     users: obj.users,
-    //   });
-    // };
-  }, []);
 
-  const connectWs = () => {
-    ws = new WebSocket(
-      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-    );
-    ws.onopen = () => {
-      console.log("CONNECTED TO WS");
-    };
-    console.log("prima dell'onMessage")
-    ws.onmessage = (event) => {
-      const obj = JSON.parse(event.data);
-      console.log("obj", obj);
-    };
-  };
+  }, []);
 
   const sendMessage = (message) => {
     setTimeout(() => {
@@ -64,7 +56,6 @@ function Game(props) {
   };
 
   function handleCardClick() {
-    connectWs();
     sendMessage({
       user_id: currentUserId,
       method: "requestCard",
