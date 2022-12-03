@@ -23,6 +23,7 @@ function Game() {
     winners: [],
     users: [],
     ended: false,
+    ready: false,
   });
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
@@ -34,8 +35,8 @@ function Game() {
 
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
+      setState({ ...state, ready: true });
     };
-
     ws.onmessage = (event) => {
       let temp = state;
       const obj = JSON.parse(event.data);
@@ -45,7 +46,6 @@ function Game() {
       }
       setState(temp);
     };
-
     ws.onclose = () => {
       console.log("close");
       setTimeout(() => connectWs(), 1000);
