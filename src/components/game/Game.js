@@ -26,37 +26,27 @@ function Game(props) {
   });
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
+  
 
-  console.log(currentUserId);
+  const connectWs = () => {
+    ws = new WebSocket(
+      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
+    );
 
+    ws.onopen = () => {
+      console.log("CONNECTED TO WS");
+    };
+   
+  };
+  
   useEffect(() => {
     connectWs();
     sendMessage({
       user_id: currentUserId,
       method: "startMatch",
     });
-    // ws.onmessage = (event) => {
-    //   const obj = JSON.parse(event.data);
-    //   setState({
-    //     ...state,
-    //     users: obj.users,
-    //   });
-    // };
-  }, []);
 
-  const connectWs = () => {
-    ws = new WebSocket(
-      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-    );
-    ws.onopen = () => {
-      console.log("CONNECTED TO WS");
-    };
-    console.log("prima dell'onMessage");
-    ws.onmessage = function (event) {
-      const obj = JSON.parse(event.data);
-      console.log("obj", obj);
-    };
-  };
+  }, []);
 
   const sendMessage = (message) => {
     setTimeout(() => {
@@ -65,7 +55,6 @@ function Game(props) {
   };
 
   function handleCardClick() {
-  
     sendMessage({
       user_id: currentUserId,
       method: "requestCard",
