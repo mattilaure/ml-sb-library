@@ -34,6 +34,12 @@ function Game() {
 
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
+      sendMessage({
+        user_id: currentUserId,
+        method: "startMatch",
+      });
+
+      drawFirst();
     };
 
     ws.onmessage = (event) => {
@@ -54,11 +60,6 @@ function Game() {
 
   useEffect(() => {
     connectWs();
-    sendMessage({
-      user_id: currentUserId,
-      method: "startMatch",
-    });
-    drawFirst();
   }, []);
 
   const sendMessage = (message) => {
@@ -78,16 +79,6 @@ function Game() {
     });
   }
 
-  // function checkEndMatch() {
-  //   sendMessage({
-  //     user_id: currentUserId,
-  //     method: "checkEndMatch",
-  //   });
-  //   ws.onmessage = (event) => {
-  //     const obj = JSON.parse(event.data);
-  //     console.log(obj);
-  //   };
-  // }
   async function exitLobby() {
     const resp = await deleteLobby();
   }
