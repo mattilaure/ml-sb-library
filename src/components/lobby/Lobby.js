@@ -48,11 +48,13 @@ function Lobby() {
         users: obj.users,
       });
     };
-
   };
 
   useEffect(() => {
     connectWs();
+    return () => {
+      ws.close();
+    };
   }, []);
 
   const sendMessage = (message) => {

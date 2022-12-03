@@ -21,12 +21,10 @@ function Game(props) {
     figure: "RE",
   };
   const [state, setState] = useState({
-    users: [],
-    handsInGame: [],
+    hands: [],
     winners: [],
-    // userChoice: "",
-    // activePlayer: 0,
-    // ended: false,
+    users: [],
+    ended: false,
   });
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
@@ -123,6 +121,8 @@ function Game(props) {
     }
     return cardToDisplay;
   }
+
+  function mapHands() {}
 
   return (
     <View style={style.gameContainer}>
