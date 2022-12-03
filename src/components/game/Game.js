@@ -9,6 +9,7 @@ import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 
 //props.users[{user1}, {user2}, ecc.]
 let turnCounter = 1;
+let ws = null;
 function Game(props) {
   const CARTAPESCATA = {
     value: 0.5,
@@ -25,7 +26,7 @@ function Game(props) {
   });
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
-  let ws = null;
+
   console.log(currentUserId);
 
   useEffect(() => {
@@ -50,8 +51,8 @@ function Game(props) {
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
     };
-    console.log("prima dell'onMessage")
-    ws.onmessage = (event) => {
+    console.log("prima dell'onMessage");
+    ws.onmessage = function (event) {
       const obj = JSON.parse(event.data);
       console.log("obj", obj);
     };
@@ -64,7 +65,7 @@ function Game(props) {
   };
 
   function handleCardClick() {
-    connectWs();
+  
     sendMessage({
       user_id: currentUserId,
       method: "requestCard",
@@ -128,8 +129,6 @@ function Game(props) {
     }
     return cardToDisplay;
   }
-
- 
 
   return (
     <View style={style.gameContainer}>
