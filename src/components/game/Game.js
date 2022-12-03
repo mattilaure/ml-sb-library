@@ -34,12 +34,6 @@ function Game() {
 
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
-      sendMessage({
-        user_id: currentUserId,
-        method: "startMatch",
-      });
-
-      drawFirst();
     };
 
     ws.onmessage = (event) => {
@@ -60,6 +54,11 @@ function Game() {
 
   useEffect(() => {
     connectWs();
+    sendMessage({
+      user_id: currentUserId,
+      method: "startMatch",
+    });
+    drawFirst();
   }, []);
 
   const sendMessage = (message) => {
