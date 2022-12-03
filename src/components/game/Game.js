@@ -148,6 +148,7 @@ function Game() {
         console.log("object in game is", obj);
         temp = obj;
       }
+      setState(temp);
     };
   }
 
