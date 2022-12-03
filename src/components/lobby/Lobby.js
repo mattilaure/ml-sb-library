@@ -16,6 +16,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 let ws = null;
+let startMatchMessage = null;
 
 function Lobby() {
   const [state, setState] = useState({
@@ -24,7 +25,6 @@ function Lobby() {
 
   const navigate = useNavigate();
   const currentUserId = useSelector((state) => state.userDuck.user.id);
-  
 
   const connectWs = () => {
     ws = new WebSocket(
@@ -38,22 +38,24 @@ function Lobby() {
       });
     };
     ws.onmessage = (event) => {
-      console.log('onmessage', event)
+      console.log("onmessage", event);
       const obj = JSON.parse(event.data);
+      if (obj.hasOwnProperty("winners")) {
+        navigate("/game", { state: obj });
+      }
       setState({
         ...state,
         users: obj.users,
       });
     };
 
-    ws.onclose = () =>{
-      console.log('close')
-    }
+    ws.onclose = () => {
+      console.log("close");
+    };
   };
 
   useEffect(() => {
     connectWs();
-
   }, []);
 
   const sendMessage = (message) => {
@@ -79,13 +81,16 @@ function Lobby() {
   };
 
   const handlePlay = () => {
-    const message = {
-      user_id : currentUserId,
-      method: "startMatch"
+    if (state.users.length >= 2) {
+      const message = {
+        user_id: currentUserId,
+        method: "startMatch",
+      };
+      sendMessage(message);
+    } else {
+      console.log("Bisogna essere almeno in due per giocare");
     }
-    sendMessage(message);
-    // navigate("/game");
-  }
+  };
 
   return (
     <View style={styles.container}>
