@@ -49,9 +49,6 @@ function Lobby() {
       });
     };
 
-    ws.onclose = () => {
-      console.log("close");
-    };
   };
 
   useEffect(() => {

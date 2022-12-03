@@ -6,11 +6,15 @@ import { CARDS } from "../assets/images/index";
 import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
+import { useLocation } from "react-router-dom";
 
 //props.users[{user1}, {user2}, ecc.]
 let turnCounter = 1;
 let ws = null;
+
 function Game(props) {
+  const location = useLocation();
+  console.log(location);
   const CARTAPESCATA = {
     value: 0.5,
     seed: "COPPE",
@@ -26,7 +30,6 @@ function Game(props) {
   });
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
-  
 
   const connectWs = () => {
     ws = new WebSocket(
@@ -36,16 +39,18 @@ function Game(props) {
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
     };
-   
+    ws.onclose = () => {
+      console.log("close");
+      setTimeout(() => connectWs(), 1000);
+    };
   };
-  
+
   useEffect(() => {
     connectWs();
     sendMessage({
       user_id: currentUserId,
       method: "startMatch",
     });
-
   }, []);
 
   const sendMessage = (message) => {
