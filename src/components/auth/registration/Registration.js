@@ -12,16 +12,16 @@ import Button from "../../button/Button";
 
 //api
 import { signUpApi } from "../../services/api/registration/registrationApi";
-
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
+  const navigate = useNavigate;
 
   const [state, setState] = useState({
     email: "",
     password: "",
     username: "",
   });
-
 
   function handleChangeUser(e) {
     setState({ ...state, username: e });
@@ -34,7 +34,11 @@ function Registration() {
   }
 
   function handleClick() {
-    if (state?.email !== "" && state?.password !== "" && state?.username !== "") {
+    if (
+      state?.email !== "" &&
+      state?.password !== "" &&
+      state?.username !== ""
+    ) {
       signUp();
     } else {
       console.log("error");
@@ -42,7 +46,10 @@ function Registration() {
   }
 
   async function signUp() {
-    const resp = await signUpApi(state)
+    const resp = await signUpApi(state);
+    if (resp.status === 200) {
+      navigate("/");
+    }
   }
 
   return (

@@ -82,7 +82,6 @@ function Home() {
               label="REGISTRATI"
               callback={() => navigate("/registration")}
             />
-            <Button label="MODIFICA DATI" callback={editUser} />
           </View>
           <Image
             source={require("../assets/images/LOGO.png")}

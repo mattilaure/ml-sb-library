@@ -9,6 +9,7 @@ import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import { styles } from "../button/buttonStyle";
 import ModalCustom from "../modal/ModalCustom";
+import trophy from "../assets/images/trophy-icon.png";
 
 let ws = null;
 
@@ -223,14 +224,24 @@ function Game() {
         }}
       />
       <View style={style.players}>{state?.hands?.map(mapHands)}</View>
-      <Button label="esci" callback={exitLobby} />
+      <Button label="Esci" callback={exitLobby} />
       {/* <Button label="carte" callback={requestCard} />
       <Button label="stai" callback={stopPlaying} />  */}
       <View style={style.buttons}></View>
-
-      <ModalCustom visible={modalIsVisible}>
+      <ModalCustom visible={modalIsVisible} animation="slide">
         <View style={style.modal}>
-          <Text>Ha vinto : {state.winners.map(mapWinners)}</Text>
+          <Text style={style.winnerText}>CONGRATULAZIONI!</Text>
+          <Text style={style.winnerText}>{state.winners.map(mapWinners)}</Text>
+          <Image
+            source={trophy}
+            resizeMode="contain"
+            style={{
+              width: 112,
+              height: 112,
+              marginTop: 30
+            }}
+          />
+         <Button label="Torna alla lobby" callback={exitLobby} />
         </View>
       </ModalCustom>
     </View>

@@ -25,31 +25,46 @@ export const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     padding: 30,
-
   },
-  test: {
-    height: 200,
-    width: 200,
-    backgroundColor: "red",
+  playerHand: { maxWidth: 500, maxHeight: "100%", justifyContent: "center" },
+  handButtons: {
+    flexDirection: "row",
+    gap: 10,
+    marginBottom: 10,
+    justifyContent: "center",
   },
-  playerHand: {  maxWidth: 500, maxHeight: "100%", justifyContent: "center"},
-  handButtons: {flexDirection: 'row',gap:10,marginBottom: 10,justifyContent:'center'},
-  cardImages: { display: "flex", gap: 10, flexDirection: "row", flexWrap: "wrap",justifyContent:'center'},
-  card:{height: 150, width:100},
+  cardImages: {
+    display: "flex",
+    gap: 10,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  card: { height: 150, width: 100, boxShadow: "0px 3px 3px #000000" },
   username: {
-    alignSelf: 'center',
-    color: 'white',
+    alignSelf: "center",
+    color: "#FFFAFA",
     fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 10
+    fontWeight: "bold",
+    marginTop: 10,
   },
-  modal:{
-    alignSelf: 'center',
-    justifySelf: 'center',    
-    height: '50%',
-    width: '50%',
-    backgroundColor: 'white',
-    justifyContent:'center',
-    alignItems:'center'
-  }
+  modal: {
+    alignSelf: "center",
+    justifySelf: "center",
+    height: "50%",
+    width: "50%",
+    backgroundColor: "#BB2528",
+    borderColor: "#F4D10E",
+    borderWidth: 10,
+    borderRadius: 20,
+    borderStyle: "dotted",
+    justifyContent: "center",
+    alignItems: "center",
+    top: 200,
+    boxShadow: "1px 12px 12px #000000",
+  },
+  winnerText:{
+    color: "#FFFAFA",
+    fontSize: 40    
+  },
 });
