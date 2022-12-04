@@ -31,7 +31,7 @@ function Lobby() {
       "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
     );
     ws.onopen = () => {
-      console.log("CONNECTED TO WS");
+      console.log("CONNECTED TO LOBBY WS");
       sendMessage({
         method: "connectLobby",
         user_id: currentUserId,
@@ -48,6 +48,9 @@ function Lobby() {
         users: obj.users,
       });
     };
+    ws.onclose = () => {
+      console.log('close lobby WS');
+    }
   };
 
   useEffect(() => {

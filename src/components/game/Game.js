@@ -33,7 +33,7 @@ function Game() {
     );
 
     ws.onopen = () => {
-      console.log("CONNECTED TO WS");
+      console.log("CONNECTED TO GAME WS");
       setState({ ...state, ready: true });
     };
     ws.onmessage = (event) => {
@@ -46,7 +46,7 @@ function Game() {
     };
     ws.onclose = () => {
       console.log("close");
-      setTimeout(() => connectWs(), 1000);
+      setTimeout(() => connectWs(), 200);
     };
   };
 
