@@ -31,39 +31,41 @@ function Game() {
     )
   );
 
-  const [wsReady,setWsReady] = useState(false)
+  const [wsReady, setWsReady] = useState(false);
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
 
   useEffect(() => {
     ws.onopen = (event) => {
-      setWsReady(true)
+      setWsReady(true);
       sendMessage({
         user_id: currentUserId,
         method: "startMatch",
       });
-      setTimeout(()=>{
-        sendMessage({
-          user_id: currentUserId,
-          method: "requestCard",
-        });
-      },200)
-      
+      sendMessage({
+        user_id: currentUserId,
+        method: "requestCard",
+      });
     };
 
     ws.onmessage = function (event) {
+      console.log("messaggio ricevuto");
       let temp = state;
       const obj = JSON.parse(event.data);
       if (obj.hasOwnProperty("ended")) {
         console.log("object in game is", obj);
         temp = obj;
       }
-      setState(temp)
+      setState(temp);
     };
 
     ws.onclose = function (event) {
-     setWsReady(false);
+      setWsReady(false);
       setTimeout(() => {
+        sendMessage({
+          user_id: currentUserId,
+          method: "connectLobby"
+        })
         setWs(
           new WebSocket(
             "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
@@ -111,12 +113,11 @@ function Game() {
   //     user_id: currentUserId,
   //     method: "startMatch",
   //   });
-  
-  
+
   // }, []);
 
   const sendMessage = (message) => {
-    if(state.wsReady){
+    if (wsReady) {
       setTimeout(() => {
         ws.send(JSON.stringify(message));
       }, 200);
@@ -195,8 +196,6 @@ function Game() {
   }
 
   function drawFirst() {
-   
-
     ws.onmessage = (event) => {
       let temp = state;
       const obj = JSON.parse(event.data);
