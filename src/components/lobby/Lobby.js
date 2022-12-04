@@ -41,6 +41,10 @@ function Lobby() {
       console.log("onmessage", event);
       const obj = JSON.parse(event.data);
       if (obj.hasOwnProperty("winners")) {
+        sendMessage({
+          user_id: currentUserId,
+          method: "startMatch",
+        });
         navigate("/game", { state: obj });
       }
       setState({
@@ -49,8 +53,8 @@ function Lobby() {
       });
     };
     ws.onclose = () => {
-      console.log('close lobby WS');
-    }
+      console.log("close lobby WS");
+    };
   };
 
   useEffect(() => {

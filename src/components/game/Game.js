@@ -37,15 +37,8 @@ function Game() {
 
   useEffect(() => {
     ws.onopen = (event) => {
-      console.log('connessione game aperta');
+      console.log("connessione game aperta");
       setWsReady(true);
-      sendMessage({
-        user_id: currentUserId,
-        method: "startMatch",
-      });
-      setTimeout(()=>{
-        requestCard();
-      },200)
     };
 
     ws.onclose = function (event) {
@@ -56,7 +49,7 @@ function Game() {
             "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
           )
         );
-      }, 200);
+      }, 1000);
     };
 
     ws.onerror = function (err) {
@@ -83,36 +76,9 @@ function Game() {
     };
   });
 
-  // const connectWs = () => {
-  //   ws = new WebSocket(
-  //     "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-  //   );
-
-  //   ws.onopen = () => {
-  //     console.log("CONNECTED TO GAME WS");
-  //     setState({ ...state, wsReady: true });
-  //   };
-  //   ws.onmessage = (event) => {
-  //     let temp = state;
-  //     const obj = JSON.parse(event.data);
-  //     if (obj.hasOwnProperty("ended")) {
-  //       console.log("object in game is", obj);
-  //       temp = obj;
-  //     }
-  //   };
-  //   ws.onclose = () => {
-  //     console.log("close");
-  //     setTimeout(() => connectWs(), 200);
-  //   };
-  // };
-
-  // useEffect(() => {
-  //   sendMessage({
-  //     user_id: currentUserId,
-  //     method: "startMatch",
-  //   });
-
-  // }, []);
+  useEffect(() => {
+    requestCard();
+  }, []);
 
   const sendMessage = (message) => {
     if (wsReady) {
@@ -150,31 +116,32 @@ function Game() {
     const resp = await deleteLobby();
   }
 
-  function game() {}
-
-  function handleClick(currentHand) {}
-
-  function handleStay(currentHand) {}
-
+  //mappa i giocatori partecipanti
   function mapHands(hand, key) {
     return (
-      <View key={key}>
-        <Button label="carta" callback={handleCardClick} />
-        <Button label="stai" callback={handleCardClick} />
-        <Button label="esci" callback={exitLobby} />
-        {hand.cards.map(mapCards)}
-        {/* Invece del text qui dentro va fatto un altro map con le carte dell'utente*/}
-        <Text>{hand.user.username}</Text>
+      <View key={key} style={style.playerHand}>
+        <View style={style.handButtons}>
+          {hand.turn === true && hand.user.id === currentUserId && (
+            <>
+              <Button label="carta" callback={handleCardClick} />
+              <Button label="stai" callback={handleCardClick} />
+            </>
+          )}
+        </View>
+
+        <View style={style.cardImages}>{hand.cards.map(mapCards)}</View>
+        <Text style={style.username}>{hand.user.username}</Text>
       </View>
     );
   }
 
+  //mappa le immagini delle carte
   function mapCards(card, key) {
     return (
       <Image
-        resizeMode="contain"
+        resizeMode="stretch"
         source={displayCard(card)}
-        style={{ height: 300 }}
+        style={style.card}
       />
     );
   }
