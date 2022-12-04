@@ -25,45 +25,19 @@ function Game() {
     ended: false,
   });
 
-  const [ws, setWs] = useState(
-    new WebSocket(
-      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-    )
-  );
-
-  const [wsReady, setWsReady] = useState(false);
 
   const currentUserId = useSelector((state) => state.userDuck.user.id);
 
   useEffect(() => {
+    connectWs();
+    requestCard();
+  }, []);
+
+  function connectWs(){
     ws.onopen = (event) => {
       console.log("connessione game aperta");
-      setWsReady(true);
     };
 
-    ws.onclose = function (event) {
-      setWsReady(false);
-      setTimeout(() => {
-        setWs(
-          new WebSocket(
-            "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
-          )
-        );
-      }, 1000);
-    };
-
-    ws.onerror = function (err) {
-      console.log("Socket encountered error: ", err.message, "Closing socket");
-      setWsReady(false);
-      ws.close();
-    };
-
-    // return () => {
-    //   ws.close();
-    // };
-  }, [ws]);
-
-  useEffect(() => {
     ws.onmessage = function (event) {
       console.log("messaggio ricevuto");
       let temp = state;
@@ -74,18 +48,21 @@ function Game() {
       }
       setState(temp);
     };
-  });
 
-  useEffect(() => {
-    requestCard();
-  }, []);
+    ws.onclose = function (event) {
+
+    };
+
+    ws.onerror = function (err) {
+      console.log("Socket encountered error: ", err.message, "Closing socket");
+      ws.close();
+    };
+  }
 
   const sendMessage = (message) => {
-    if (wsReady) {
       setTimeout(() => {
         ws.send(JSON.stringify(message));
       }, 200);
-    }
   };
 
   function requestCard() {

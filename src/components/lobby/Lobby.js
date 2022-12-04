@@ -41,10 +41,7 @@ function Lobby() {
       console.log("onmessage", event);
       const obj = JSON.parse(event.data);
       if (obj.hasOwnProperty("winners")) {
-        sendMessage({
-          user_id: currentUserId,
-          method: "startMatch",
-        });
+
         navigate("/game", { state: obj });
       }
       setState({
@@ -59,9 +56,6 @@ function Lobby() {
 
   useEffect(() => {
     connectWs();
-    return () => {
-      ws.close();
-    };
   }, []);
 
   const sendMessage = (message) => {
