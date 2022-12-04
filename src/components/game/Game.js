@@ -83,9 +83,9 @@ function Game() {
       ws.close();
     };
 
-    return () => {
-      ws.close();
-    };
+    // return () => {
+    //   ws.close();
+    // };
   }, [ws]);
 
   // const connectWs = () => {
