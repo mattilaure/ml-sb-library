@@ -33,13 +33,8 @@ function Game() {
     );
 
     ws.onopen = () => {
-<<<<<<< HEAD
       console.log("CONNECTED TO GAME WS");
       setState({ ...state, ready: true });
-=======
-      console.log("CONNECTED TO WS");
-      drawFirst();
->>>>>>> 0622783fc0c8cccee144d1fa810c77261d73035b
     };
     ws.onmessage = (event) => {
       let temp = state;
@@ -99,7 +94,7 @@ function Game() {
         <Button label="esci" callback={exitLobby} />
         {hand.cards.map(mapCards)}
         {/* Invece del text qui dentro va fatto un altro map con le carte dell'utente*/}
-        <Text>{hand.user.username}</Text>
+        <Text>{hand.user.username}</Text>{" "}
       </View>
     );
   }
@@ -146,6 +141,7 @@ function Game() {
       user_id: currentUserId,
       method: "requestCard",
     });
+    
     ws.onmessage = (event) => {
       let temp = state;
       const obj = JSON.parse(event.data);
