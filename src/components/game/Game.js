@@ -34,7 +34,7 @@ function Game() {
 
     ws.onopen = () => {
       console.log("CONNECTED TO WS");
-      setState({ ...state, ready: true });
+      drawFirst();
     };
     ws.onmessage = (event) => {
       let temp = state;
@@ -94,7 +94,7 @@ function Game() {
         <Button label="esci" callback={exitLobby} />
         {hand.cards.map(mapCards)}
         {/* Invece del text qui dentro va fatto un altro map con le carte dell'utente*/}
-        <Text>{hand.user.username}</Text>{" "}
+        <Text>{hand.user.username}</Text>
       </View>
     );
   }
