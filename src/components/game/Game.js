@@ -34,6 +34,10 @@ function Game() {
   }, []);
 
   function connectWs(){
+
+    ws = new WebSocket(
+      "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
+    );
     ws.onopen = (event) => {
       console.log("connessione game aperta");
     };
