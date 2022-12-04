@@ -90,6 +90,18 @@ function Game() {
     sendMessage(message);
   }
 
+  function stopPlaying(){
+    const message = {
+      user_id: currentUserId,
+      method: "stopPlaying",
+    };
+
+    sendMessage(message);
+    setTimeout(() => {
+      checkEndMatch();
+    }, 100);
+  }
+
   function handleCardClick() {
     requestCard();
   }
@@ -109,7 +121,7 @@ function Game() {
           {hand.turn === true && hand.user.id === currentUserId && (
             <>
               <Button label="carta" callback={handleCardClick} />
-              <Button label="stai" callback={handleCardClick} />
+              <Button label="stai" callback={stopPlaying} />
             </>
           )}
         </View>
@@ -201,9 +213,7 @@ function Game() {
           top: "35%",
         }}
       />
-      <View style={style.players}>{state?.hands?.map(mapHands)}</View>
-      <Button label="carta" callback={handleCardClick} />
-      <Button label="stai" callback={handleCardClick} />
+      <View style={style.players}>{state?.hands?.map(mapHands)}</View>  
       <Button label="esci" callback={exitLobby} />
     </View>
   );

@@ -25,17 +25,22 @@ export const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     padding: 30,
-    borderColor: "black",
-    borderWidth: 2,
+
   },
   test: {
     height: 200,
     width: 200,
     backgroundColor: "red",
   },
-  playerHand: { borderColor: "black", borderWidth: 2, maxWidth: 500, maxHeight: "100%", justifyContent: "center"},
+  playerHand: {  maxWidth: 500, maxHeight: "100%", justifyContent: "center"},
   handButtons: {width: 200},
-  cardImages: { display: "flex", flexDirection: "row", flexWrap: "wrap"},
+  cardImages: { display: "flex", gap: 10, flexDirection: "row", flexWrap: "wrap"},
   card:{height: 150, width:100},
-  username: {},
+  username: {
+    alignSelf: 'center',
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10
+  },
 });
