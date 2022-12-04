@@ -23,7 +23,6 @@ function Game() {
     winners: [],
     users: [],
     ended: false,
-    wsReady: false,
   });
 
   const [ws, setWs] = useState(
@@ -32,14 +31,13 @@ function Game() {
     )
   );
 
+  const [wsReady,setWsReady] = useState(false)
+
   const currentUserId = useSelector((state) => state.userDuck.user.id);
 
   useEffect(() => {
     ws.onopen = (event) => {
-      setState({
-        ...state,
-        wsReady: true,
-      });
+      setWsReady(true)
       sendMessage({
         user_id: currentUserId,
         method: "startMatch",
@@ -60,28 +58,23 @@ function Game() {
         console.log("object in game is", obj);
         temp = obj;
       }
+      setState(temp)
     };
 
     ws.onclose = function (event) {
-      setState({
-        ...state,
-        wsReady: false,
-      });
+     setWsReady(false);
       setTimeout(() => {
         setWs(
           new WebSocket(
             "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
           )
         );
-      }, 1000);
+      }, 200);
     };
 
     ws.onerror = function (err) {
       console.log("Socket encountered error: ", err.message, "Closing socket");
-      setState({
-        ...state,
-        wsReady: false,
-      });
+      setWsReady(false);
       ws.close();
     };
 
