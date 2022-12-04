@@ -42,30 +42,12 @@ function Game() {
         user_id: currentUserId,
         method: "startMatch",
       });
-      sendMessage({
-        user_id: currentUserId,
-        method: "requestCard",
-      });
-    };
-
-    ws.onmessage = function (event) {
-      console.log("messaggio ricevuto");
-      let temp = state;
-      const obj = JSON.parse(event.data);
-      if (obj.hasOwnProperty("ended")) {
-        console.log("object in game is", obj);
-        temp = obj;
-      }
-      setState(temp);
+      requestCard();
     };
 
     ws.onclose = function (event) {
       setWsReady(false);
       setTimeout(() => {
-        sendMessage({
-          user_id: currentUserId,
-          method: "connectLobby"
-        })
         setWs(
           new WebSocket(
             "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
@@ -84,6 +66,19 @@ function Game() {
     //   ws.close();
     // };
   }, [ws]);
+
+  useEffect(() => {
+    ws.onmessage = function (event) {
+      console.log("messaggio ricevuto");
+      let temp = state;
+      const obj = JSON.parse(event.data);
+      if (obj.hasOwnProperty("ended")) {
+        console.log("object in game is", obj);
+        temp = obj;
+      }
+      setState(temp);
+    };
+  });
 
   // const connectWs = () => {
   //   ws = new WebSocket(
@@ -124,15 +119,28 @@ function Game() {
     }
   };
 
-  function handleCardClick() {
-    sendMessage({
+  function requestCard() {
+    const message = {
       user_id: currentUserId,
       method: "requestCard",
-    });
-    sendMessage({
-      user_id: 15,
+    };
+    sendMessage(message);
+    setTimeout(() => {
+      checkEndMatch();
+    }, 100);
+  }
+
+  function checkEndMatch() {
+    const message = {
+      user_id: currentUserId,
       method: "checkEndMatch",
-    });
+    };
+
+    sendMessage(message);
+  }
+
+  function handleCardClick() {
+    requestCard();
   }
 
   async function exitLobby() {
@@ -153,7 +161,7 @@ function Game() {
         <Button label="esci" callback={exitLobby} />
         {hand.cards.map(mapCards)}
         {/* Invece del text qui dentro va fatto un altro map con le carte dell'utente*/}
-        <Text>{hand.user.username}</Text>{" "}
+        <Text>{hand.user.username}</Text>
       </View>
     );
   }
