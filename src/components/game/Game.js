@@ -44,10 +44,12 @@ function Game() {
         user_id: currentUserId,
         method: "startMatch",
       });
-      sendMessage({
-        user_id: currentUserId,
-        method: "requestCard",
-      });
+      setTimeout(()=>{
+        sendMessage({
+          user_id: currentUserId,
+          method: "requestCard",
+        });
+      },200)
       
     };
 
@@ -83,9 +85,9 @@ function Game() {
       ws.close();
     };
 
-    return () => {
-      ws.close();
-    };
+    // return () => {
+    //   ws.close();
+    // };
   }, [ws]);
 
   // const connectWs = () => {
@@ -121,9 +123,11 @@ function Game() {
   // }, []);
 
   const sendMessage = (message) => {
-    setTimeout(() => {
-      ws.send(JSON.stringify(message));
-    }, 200);
+    if(state.wsReady){
+      setTimeout(() => {
+        ws.send(JSON.stringify(message));
+      }, 200);
+    }
   };
 
   function handleCardClick() {
@@ -242,7 +246,7 @@ function Game() {
           top: "35%",
         }}
       />
-      <View style={style.players}>{state.hands.map(mapHands)}</View>
+      <View style={style.players}>{state?.hands?.map(mapHands)}</View>
       <Button label="carta" callback={handleCardClick} />
       <Button label="stai" callback={handleCardClick} />
       <Button label="esci" callback={exitLobby} />
