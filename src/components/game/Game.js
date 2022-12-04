@@ -6,13 +6,14 @@ import { CARDS } from "../assets/images/index";
 import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 let ws = null;
 
 function Game() {
+  const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
+
   const CARTAPESCATA = {
     value: 0.5,
     seed: "COPPE",
@@ -95,6 +96,9 @@ function Game() {
 
   async function exitLobby() {
     const resp = await deleteLobby();
+    if(resp.status === 200){
+      navigate("/")
+    }
   }
 
   //mappa i giocatori partecipanti
