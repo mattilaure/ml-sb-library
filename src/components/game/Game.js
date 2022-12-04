@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import { deleteLobby } from "../services/api/lobby/lobbyApi.js";
 import { useNavigate, useLocation } from "react-router-dom";
+import { styles } from "../button/buttonStyle";
+import ModalCustom from "../modal/ModalCustom";
 
 let ws = null;
 
@@ -26,7 +28,7 @@ function Game() {
     ended: false,
   });
 
-
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const currentUserId = useSelector((state) => state.userDuck.user.id);
 
   useEffect(() => {
@@ -34,8 +36,11 @@ function Game() {
     requestCard();
   }, []);
 
-  function connectWs(){
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
+  function connectWs() {
     ws = new WebSocket(
       "ws://7emezzo-dev.eba-uwfpyt28.eu-south-1.elasticbeanstalk.com/ws"
     );
@@ -48,15 +53,16 @@ function Game() {
       let temp = state;
       const obj = JSON.parse(event.data);
       if (obj.hasOwnProperty("ended")) {
+        if (obj.winners.length >= 1 && obj.ended) {
+          setModalIsVisible(true);
+        }
         console.log("object in game is", obj);
         temp = obj;
       }
       setState(temp);
     };
 
-    ws.onclose = function (event) {
-
-    };
+    ws.onclose = function (event) {};
 
     ws.onerror = function (err) {
       console.log("Socket encountered error: ", err.message, "Closing socket");
@@ -65,9 +71,9 @@ function Game() {
   }
 
   const sendMessage = (message) => {
-      setTimeout(() => {
-        ws.send(JSON.stringify(message));
-      }, 200);
+    setTimeout(() => {
+      ws.send(JSON.stringify(message));
+    }, 200);
   };
 
   function requestCard() {
@@ -90,7 +96,7 @@ function Game() {
     sendMessage(message);
   }
 
-  function stopPlaying(){
+  function stopPlaying() {
     const message = {
       user_id: currentUserId,
       method: "stopPlaying",
@@ -108,8 +114,8 @@ function Game() {
 
   async function exitLobby() {
     const resp = await deleteLobby();
-    if(resp.status === 200){
-      navigate("/")
+    if (resp.status === 200) {
+      navigate("/");
     }
   }
 
@@ -125,7 +131,6 @@ function Game() {
             </>
           )}
         </View>
-
         <View style={style.cardImages}>{hand.cards.map(mapCards)}</View>
         <Text style={style.username}>{hand.user.username}</Text>
       </View>
@@ -193,6 +198,10 @@ function Game() {
     return cardToDisplay;
   }
 
+  function mapWinners(user, index) {
+    return <Text key={index + Date.now()}>{user.username}</Text>;
+  }
+
   return (
     <View style={style.gameContainer}>
       <View style={style.house}>
@@ -213,8 +222,17 @@ function Game() {
           top: "35%",
         }}
       />
-      <View style={style.players}>{state?.hands?.map(mapHands)}</View>  
+      <View style={style.players}>{state?.hands?.map(mapHands)}</View>
       <Button label="esci" callback={exitLobby} />
+      {/* <Button label="carte" callback={requestCard} />
+      <Button label="stai" callback={stopPlaying} />  */}
+      <View style={style.buttons}></View>
+
+      <ModalCustom visible={modalIsVisible}>
+        <View style={style.modal}>
+          <Text>Ha vinto : {state.winners.map(mapWinners)}</Text>
+        </View>
+      </ModalCustom>
     </View>
   );
 }
