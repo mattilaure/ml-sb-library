@@ -37,12 +37,15 @@ function Game() {
 
   useEffect(() => {
     ws.onopen = (event) => {
+      console.log('connessione game aperta');
       setWsReady(true);
       sendMessage({
         user_id: currentUserId,
         method: "startMatch",
       });
-      requestCard();
+      setTimeout(()=>{
+        requestCard();
+      },200)
     };
 
     ws.onclose = function (event) {
